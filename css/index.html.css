@@ -1,0 +1,34 @@
+.content__branches-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.work-item {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.work-id {
+    font-weight: bold;
+}
+
+.branch-name {
+    color: #007bff;
+}
+
+.city {
+    font-style: italic; /* Делаем текст курсивом */
+}
+
+.address {
+    /* Можно добавить дополнительные стили для адреса */
+}
+
+.workers-count {
+    /* Можно добавить дополнительные стили для количества работников */
+}

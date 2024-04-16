@@ -1,10 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Пример Twig</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список рабочих мест</title>
+    <link rel="stylesheet" href="/css/index.html.css">
 </head>
 <body>
-<h1>Привет, мир!</h1>
-<p>Это пример использования Twig в PHP.</p>
+<ul class="work-page">
+    <h1 class="content__branches-list">List of branches</h1>
+    {% for row in rows %}
+        <li class="work-page__branches">
+            <div class="work-item">
+                <div class="work-id">{{ row.id }}</div>
+                <a class="branch-name" href="/branch.php?id={{ row.id|trim }}">{{ row.branch_name }}</a>
+                <div class="city">{{ row.city }}</div>
+                <div class="address">{{ row.address }}</div>
+                <div class="workers-count">{{ row.workers_count }}</div>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
 </body>
 </html>
