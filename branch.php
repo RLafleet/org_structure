@@ -9,11 +9,11 @@ use Twig\Loader\FilesystemLoader;
 $TEMPLATE_NAME = "/public/branch.html.twig";
 
 
-$id = $_GET['id'] || '';
-
-$rows = BranchWorkersRequestTable::GetInfoAboutBranchesWorkers();
-
+$branch_id = $_GET['id'] ?? '';
+$rows = BranchWorkersRequestTable::GetInfoAboutBranchesWorkers($branch_id);
 $loader = new FilesystemLoader(__DIR__);
 $twig = new Environment($loader);
 
-echo $twig->render($TEMPLATE_NAME);
+echo $twig->render($TEMPLATE_NAME,
+    ['rows' => $rows]
+);

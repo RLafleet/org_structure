@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="eng">
 <head>
-    <link rel="stylesheet" type="text/css" href="../css/branch.html.css">
-    <title>Org structure branch</title>
+    <link rel="stylesheet" type="text/css" href="../css/index.html.css">
+    <title>Worker</title>
 </head>
-<div class="workers">
-    <h1 class="workers__title">Workers</h1>
-    <ul class="workers__list list">
-        <div class="list__element element">
-            <a class="element__link" href="/worker.php">Andrey</a>
-        </div>
-    </ul>
+<div class="">
+    <h1 class="content__branches-list">List of workers</h1>
+    {% for row in rows %}
+        <li class="work-page__branches">
+            <div class="work-item">
+                <div class="branch-name">{{ loop.index }}</div>
+                <a class="branch-name" href="/worker.php?id={{ row.id|trim }}" >{{ row.first_name }} {{ row.last_name }} {{ row.middle_name }}</a>
+            </div>
+        </li>
+    {% endfor %}
 </div>
 </html>

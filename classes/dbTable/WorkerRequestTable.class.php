@@ -1,20 +1,20 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/classes/util/dbQueryUtil.class.php';
 
-class BranchWorkersRequestTable
+class WorkerRequestTable
 {
     /**
-     * @param $worker_id
+     * @param $id
      * @return array
      */
-    public static function GetInfoAboutBranchesWorkers($worker_id): array
+    public static function GetInfoAboutWorker($id): array
     {
         $sql = "
             SELECT 
                 * 
             FROM 
                 user
-            WHERE branch_id = " . DbQueryUtils::Quote($worker_id) . "
+            WHERE id = " . DbQueryUtils::Quote($id) . "
         ";
 
         return DbQueryUtils::Fetch($sql);

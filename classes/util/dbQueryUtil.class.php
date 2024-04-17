@@ -1,6 +1,7 @@
 <?php
 use classes\connection\OrgStructureConnection;
 require_once $_SERVER['DOCUMENT_ROOT'] . '/classes/connection/OrgStructureConnection.class.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/classes/config/DbConfig.class.php';
 
 class DbQueryUtils
 {
@@ -22,6 +23,16 @@ class DbQueryUtils
         }
 
         return $array;
+    }
+
+    /**
+     * @param $str
+     * @return string
+     */
+    public static function Quote($str)
+    {
+        $connection = OrgStructureConnection::GetDbConnection();
+        return mysqli_real_escape_string($connection, $str);
     }
 
     /**

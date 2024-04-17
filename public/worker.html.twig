@@ -4,11 +4,18 @@
     <link rel="stylesheet" type="text/css" href="../css/worker.html.css">
     <title>Worker</title>
 </head>
-<div class="">
-    <h1 class="">Worker {{ name }}</h1>
-    <ul class="">
-        <div class="">
-        </div>
+<div class="worker-container">
+    <h1 class="worker-header">Worker {{ row.first_name }} {{ row.last_name }}</h1>
+    <ul>
+        <li class="worker-item">
+            <div class="worker-info">Full name: {{ row.first_name }} {{ row.last_name }} {{ row.middle_name }}</div>
+            <div class="worker-info">Phone number: {{ row.phone_number }}</div>
+            <div class="worker-info">Email: {{ row.email }}</div>
+            <div class="worker-info">Sex: {{ row.sex }}</div>
+            <div class="worker-info">Birth date: {{ row.birth_date }}</div>
+            <div class="worker-info">Hiring date: {{ row.hiring_date }}</div>
+            <div class="worker-info__administrator-comment">Administrator comment: {{ row.comment }}</div>
+        </li>
     </ul>
 </div>
 </html>
