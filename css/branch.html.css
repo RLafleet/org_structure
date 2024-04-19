@@ -1,5 +1,66 @@
+.work-page {
+    width: 100%;
+    height: 100%;
+}
+
+.content__branches-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.work-item {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.worker-full-name {
+    font-size: 24px;
+    margin-left: 40px;
+}
+
+.worker-position {
+    font-size: 24px;
+    margin-left: 700px;
+}
+
 .workers__title {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.work-page__new-worker {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.work-page__add-worker {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 97%;
+    margin: auto;
+    padding: 15px 0;
+    border: dashed gray;
+}
+
+.new-worker__title {
+    width: 100%;
+    font-size: 20px;
+    padding: 20px;
+}
+
+.add-worker__button {
+    padding: 5px 10px;
+}
+
+.add-worker__label {
+    padding: 0 10px;
 }

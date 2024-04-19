@@ -1,18 +1,45 @@
 <!DOCTYPE html>
 <html lang="eng">
 <head>
-    <link rel="stylesheet" type="text/css" href="../css/index.html.css">
+    <link rel="stylesheet" type="text/css" href="../css/branch.html.css">
     <title>Worker</title>
 </head>
 <div class="">
-    <h1 class="content__branches-list">List of workers</h1>
+    <h1 class="content__branches-list">Branch workers</h1>
     {% for row in rows %}
-        <li class="work-page__branches">
+        <div class="work-page__branches" id="branches">
             <div class="work-item">
                 <div class="branch-name">{{ loop.index }}</div>
-                <a class="branch-name" href="/worker.php?id={{ row.id|trim }}" >{{ row.first_name }} {{ row.last_name }} {{ row.middle_name }}</a>
+                <a class="worker-full-name" href="/worker.php?id={{ row.id|trim }}" data-value="{{ row.id|trim }}">{{ row.first_name }} {{ row.last_name }} {{ row.middle_name }}</a>
+                <div class="worker-position">{{ row.position }}</div>
             </div>
-        </li>
+        </div>
     {% endfor %}
+    <div class="work-page__new-worker">
+        <button class="new-worker__title">
+            Add worker
+        </button>
+    </div>
+    <div class="work-page__add-worker">
+        <label class="add-worker__label">
+            Enter first name
+            <input class="label__worker-name">
+        </label>
+        <label class="add-worker__label">
+            Enter last name
+            <input class="label__worker-last-name">
+        </label>
+        <label class="add-worker__label">
+            Enter middle name
+            <input class="label__worker-middle-name">
+        </label>
+        <label class="add-worker__label">
+            Enter position
+            <input class="label__worker-position">
+        </label>
+        <button class="add-worker__button">Add</button>
+    </div>
 </div>
 </html>
+
+<script type="module" src="/js/simplyScripts/addWorker.js"></script>

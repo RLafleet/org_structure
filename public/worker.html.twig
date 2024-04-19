@@ -6,16 +6,60 @@
 </head>
 <div class="worker-container">
     <h1 class="worker-header">Worker {{ row.first_name }} {{ row.last_name }}</h1>
-    <ul>
-        <li class="worker-item">
-            <div class="worker-info">Full name: {{ row.first_name }} {{ row.last_name }} {{ row.middle_name }}</div>
-            <div class="worker-info">Phone number: {{ row.phone_number }}</div>
-            <div class="worker-info">Email: {{ row.email }}</div>
-            <div class="worker-info">Sex: {{ row.sex }}</div>
-            <div class="worker-info">Birth date: {{ row.birth_date }}</div>
-            <div class="worker-info">Hiring date: {{ row.hiring_date }}</div>
-            <div class="worker-info__administrator-comment">Administrator comment: {{ row.comment }}</div>
-        </li>
-    </ul>
+    <div class="worker-header__person">
+        <ul>
+            <li class="worker-item">
+                <label class="worker-label">
+                    <div class="worker-info">Full name: </div>
+                    <input class="worker-input" value="{{ row.first_name }} {{ row.last_name }} {{ row.middle_name }}">
+                </label>
+                <label class="worker-label">
+                    <div class="worker-info">Phone number: </div>
+                    <input class="worker-input" value="{{ row.phone_number }}">
+                </label>
+                <label class="worker-label">
+                    <div class="worker-info">Email: </div>
+                    <input class="worker-input" value="{{ row.email }}">
+                </label>
+                <label class="worker-label">
+                    <div class="worker-info">Sex: </div>
+                    <select class="worker-sex" name="sex" id="sex-select">
+                        <option value="{{ row.sex }}">{{ row.sex }}</option>
+                        <option value="male">male</option>
+                        <option value="female">female</option>
+                    </select>
+                </label>
+                <label class="worker-label">
+                    <div class="worker-info">Birth date: </div>
+                    <input class="worker-input" value="{{ row.birth_date }}">
+                </label>
+                <label class="worker-label">
+                    <div class="worker-info">Hiring date: </div>
+                    <input class="worker-input" value="{{ row.hiring_date }}">
+                </label>
+                <label class="worker-label">
+                    <div class="worker-info">Position: </div>
+                    <input class="worker-input" value="{{ row.position }}">
+                </label>
+                <label>
+                    <div class="worker-info">Administrator comment: </div>
+                    <input class="worker-info__administrator-comment" value="{{ row.comment }}">
+                </label>
+            </li>
+        </ul>
+        <div>
+            {% if row.sex == "female" %}
+                <img class="person-image" src="/public/static/women.jpg" alt="women_incognito_pict">
+            {% elseif row.sex == "male" %}
+                <img class="person-image" src="/public/static/man.jpg" alt="man_incognito_pict">
+            {% endif %}
+            <form class="person-form" enctype="multipart/form-data" method="post">
+                <p>Загрузите ваши фотографии на сервер</p>
+                <p><input type="file" name="photo" multiple accept="image/*,image/jpeg">
+                    <input type="submit" value="Отправить"></p>
+            </form>
+        </div>
+    </div>
+    <button>Save changes</button>
 </div>
 </html>

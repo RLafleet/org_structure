@@ -18,22 +18,37 @@
     margin-bottom: 10px;
 }
 
+.branch-container
+{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .work-id {
     font-weight: bold;
 }
 
 .branch-name {
+    width: 300px;
+    margin-left: 20px;
+    font-size: 24px;
     color: #007bff;
 }
 
 .city {
+    font-size: 24px;
     font-style: italic;
 }
 
 .address {
+    font-size: 24px;
 }
 
 .workers-count {
+    font-size: 24px;
 }
 
 .work-page__new-branch {

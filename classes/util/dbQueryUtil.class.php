@@ -7,6 +7,16 @@ class DbQueryUtils
 {
     /**
      * @param $sql
+     * @return bool
+     */
+    public static function RealQuery($sql)
+    {
+        $connection = OrgStructureConnection::GetDbConnection();
+        return mysqli_real_query($connection, $sql);
+    }
+
+    /**
+     * @param $sql
      * @return array
      */
     public static function Fetch($sql): array

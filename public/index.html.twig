@@ -8,47 +8,42 @@
 </head>
 <body>
 <div class="work-page">
-    <h1 class="content__branches-list">List of branches</h1>
+    <h1 class="content__branches-list">Branches</h1>
     {% for row in rows %}
         <div class="work-page__branches">
             <div class="work-item">
                 <div class="work-id">{{ row.id }}</div>
-                <a class="branch-name" href="/branch.php?id={{ row.id|trim }}">{{ row.branch_name }}</a>
-                <div class="city">{{ row.city }}</div>
-                <div class="address">{{ row.address }}</div>
-                <div class="workers-count">{{ row.workers_count }}</div>
+                <div class="branch-container">
+                    <a class="address" href="/branch.php?id={{ row.id|trim }}">Address: {{ row.address }}</a>
+                    <div class="city">City: {{ row.city }}</div>
+                    <div class="workers-count">Count of workers: {{ row.workers_count }}</div>
+                </div>
             </div>
         </div>
     {% endfor %}
-    <form class="work-page__new-branch" onclick="newBranchForm(); return false;">
+    <div class="work-page__new-branch">
         <button class="new-branch__title">
             Add company branch
         </button>
-    </form>
-    <div class="work-page__add-branch" onsubmit="addBranchForm(); return false">
+    </div>
+    <div class="work-page__add-branch">
         <label class="add-branch__label">
-            Enter branch name
-            <input class="label__branch-name">
+            Enter address
+            <input class="label__branch-address">
         </label>
         <label class="add-branch__label">
             Enter city
             <input class="label__branch-city">
         </label>
         <label class="add-branch__label">
-            Enter address
-            <input class="label__branch-address">
-        </label>
-        <label class="add-branch__label">
             Enter count of workers
             <input class="label__branch-workers-count">
         </label>
-        <form onclick="addBranchForm(); return false">
-            <button class="add-branch__button">Add</button>
-        </form>
+        <button class="add-branch__button">Add</button>
     </div>
-
 </div>
 </body>
 </html>
 
-<script src="./public/js/simplyScripts/addBranch.js"></script>
+<script type="module" src="/js/simplyScripts/addBranch.js"></script>
+
