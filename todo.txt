@@ -1,0 +1,10 @@
+веб-сервер в каталоге паблик
+/post.php?id
+xml learn.javascript.ru
+xdebug
+
+Исправить классы базы данных согласно лонгрилу шаблоды работы с бд
+typehint везде
+dbQueryUtils DbQueryUtil
+разобраться с разницей между RealQuery, Query
+ Отлавливать исключения и ошибки mysqli
