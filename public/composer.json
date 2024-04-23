@@ -1,7 +1,7 @@
 {
     "autoload": {
         "psr-4": {
-            "Twig\\": "vendor/twig/twig/src/"
+            "Twig\\": "public/vendor/twig/twig/src/"
         }
     },
     "require": {

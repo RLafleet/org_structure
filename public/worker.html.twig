@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="eng">
 <head>
-    <link rel="stylesheet" type="text/css" href="../css/worker.html.css">
+    <link rel="stylesheet" type="text/css" href="css/worker.html.css">
     <title>Worker</title>
 </head>
 <div class="worker-container">
@@ -49,9 +49,9 @@
         </ul>
         <div>
             {% if row.sex == "female" %}
-                <img class="person-image" src="/public/static/women.jpg" alt="women_incognito_pict">
+                <img class="person-image" src="static/women.jpg" alt="women_incognito_pict">
             {% elseif row.sex == "male" %}
-                <img class="person-image" src="/public/static/man.jpg" alt="man_incognito_pict">
+                <img class="person-image" src="static/man.jpg" alt="man_incognito_pict">
             {% endif %}
             <form class="person-form" enctype="multipart/form-data" method="post">
                 <p>Загрузите ваши фотографии на сервер</p>

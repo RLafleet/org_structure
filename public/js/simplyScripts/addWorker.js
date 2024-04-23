@@ -9,7 +9,7 @@ const LABEL_WORKER_MIDDLE_NAME = ".label__worker-middle-name";
 const LABEL_WORKER_position = ".label__worker-position";
 const DISPLAY_NONE = "none";
 const DISPLAY_FLEX = "flex";
-let fullNameElement = document.querySelector('.worker-full-name');
+const branch = document.querySelector('.content__branches-list');
 
 const newWorker = document.querySelector(WORK_PAGE_NEW_WORKER);
 const addWorker = document.querySelector(WORK_PAGE_ADD_WORKER);
@@ -21,7 +21,7 @@ const name = document.querySelector(LABEL_WORKER_NAME);
 const lastName = document.querySelector(LABEL_WORKER_LAST_NAME);
 const middleName = document.querySelector(LABEL_WORKER_MIDDLE_NAME);
 const position = document.querySelector(LABEL_WORKER_position);
-const id = fullNameElement.getAttribute('data-value');
+const id = branch.getAttribute('data-value');
 
 export function newWorkerForm(display1 = "none", display2 = "flex") {
     newWorker.style.display = display1;

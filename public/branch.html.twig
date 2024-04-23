@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="eng">
 <head>
-    <link rel="stylesheet" type="text/css" href="../css/branch.html.css">
+    <link rel="stylesheet" type="text/css" href="css/branch.html.css">
     <title>Worker</title>
 </head>
 <div class="">
-    <h1 class="content__branches-list">Branch workers</h1>
+    <h1 class="content__branches-list" data-value="{{ branch_id }}">Branch {{ branch_id }} workers</h1>
     {% for row in rows %}
         <div class="work-page__branches" id="branches">
             <div class="work-item">
                 <div class="branch-name">{{ loop.index }}</div>
-                <a class="worker-full-name" href="/worker.php?id={{ row.id|trim }}" data-value="{{ row.id|trim }}">{{ row.first_name }} {{ row.last_name }} {{ row.middle_name }}</a>
+                <a class="worker-full-name" href="worker.php?id={{ row.id|trim }}">{{ row.first_name }} {{ row.last_name }} {{ row.middle_name }}</a>
                 <div class="worker-position">{{ row.position }}</div>
             </div>
         </div>
@@ -42,4 +42,4 @@
 </div>
 </html>
 
-<script type="module" src="/js/simplyScripts/addWorker.js"></script>
+<script type="module" src="js/simplyScripts/addWorker.js"></script>

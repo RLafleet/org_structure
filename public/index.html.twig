@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Список рабочих мест</title>
-    <link rel="stylesheet" href="/css/index.html.css">
+    <link rel="stylesheet" href="css/index.html.css">
 </head>
 <body>
 <div class="work-page">
@@ -14,7 +14,7 @@
             <div class="work-item">
                 <div class="work-id">{{ row.id }}</div>
                 <div class="branch-container">
-                    <a class="address" href="/branch.php?id={{ row.id|trim }}">Address: {{ row.address }}</a>
+                    <a class="address" href="branch.php?id={{ row.id|trim }}">Address: {{ row.address }}</a>
                     <div class="city">City: {{ row.city }}</div>
                     <div class="workers-count">Count of workers: {{ row.workers_count }}</div>
                 </div>

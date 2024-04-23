@@ -1,5 +1,6 @@
 <?php
 
+namespace classes\config;
 class DbConfig
 {
     const DB_HOST = "localhost";

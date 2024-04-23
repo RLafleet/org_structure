@@ -1,6 +1,8 @@
-веб-сервер в каталоге паблик
-/post.php?id
-xml learn.javascript.ru
++веб-сервер в каталоге паблик
+
++/post.php?id
++xml learn.javascript.ru
+
 xdebug
 
 Исправить классы базы данных согласно лонгрилу шаблоды работы с бд

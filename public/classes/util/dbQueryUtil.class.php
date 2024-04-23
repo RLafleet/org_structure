@@ -1,5 +1,9 @@
 <?php
+
+namespace classes\util;
+
 use classes\connection\OrgStructureConnection;
+
 require_once $_SERVER['DOCUMENT_ROOT'] . '/classes/connection/OrgStructureConnection.class.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/classes/config/DbConfig.class.php';
 
@@ -23,10 +27,8 @@ class DbQueryUtils
     {
         $array = [];
         $result = self::Query($sql);
-        if ($result)
-        {
-            while ($row = mysqli_fetch_assoc($result))
-            {
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
                 $array[] = $row;
             }
             mysqli_free_result($result);

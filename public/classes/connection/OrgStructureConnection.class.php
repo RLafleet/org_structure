@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace classes\connection;
 
-use DbConfig;
+use classes\config\DbConfig;
 use mysqli;
 
 class OrgStructureConnection

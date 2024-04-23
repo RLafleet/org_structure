@@ -1,4 +1,9 @@
 <?php
+
+namespace classes\dbTable;
+
+use classes\util\DbQueryUtils;
+
 require_once $_SERVER['DOCUMENT_ROOT'] . '/classes/util/dbQueryUtil.class.php';
 
 class WorkerRequestTable
