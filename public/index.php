@@ -22,7 +22,7 @@ $city = $_POST['city'] ?? "";
 $workersCount = $_POST['workersCount'] ?? "";
 $address = $_POST['address'] ?? "";
 if(!empty($city) && !empty($workersCount) && !empty($address)) {
-    $result = BranchInsertTable::BranchDataInsert($city, $workersCount, $address);
+    $result = BranchInsertTable::BranchDataInsert($city, (int)$workersCount, $address);
 }
 
 echo $twig->render($TEMPLATE_NAME,

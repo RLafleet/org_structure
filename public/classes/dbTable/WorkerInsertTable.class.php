@@ -2,37 +2,37 @@
 
 namespace classes\dbTable;
 
-use classes\util\DbQueryUtils;
+use classes\util\DbQueryUtil;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/classes/util/dbQueryUtil.class.php';
 
 class WorkerInsertTable
 {
     /**
-     * @param $branchId
-     * @param $city
-     * @param $name
-     * @param $workersCount
-     * @param $address
+     * @param int $branchId
+     * @param string $name
+     * @param string $lastName
+     * @param string $middleName
+     * @param string $position
      * @return bool
      */
-    public static function WorkerDataInsert($branchId, $name, $lastName, $middleName, $position)
+    public static function WorkerDataInsert(int $branchId, string $name, string $lastName, string $middleName, string $position): bool
     {
         $sql = "INSERT INTO user 
             (branch_id, first_name, last_name, middle_name, phone_number, email, sex, birth_date, hiring_date, position, comment)
-            VALUES ('" . DbQueryUtils::Quote($branchId) . "',
-                    '" . DbQueryUtils::Quote($name) . "',
-                    '" . DbQueryUtils::Quote($lastName) . "',
-                    '" . DbQueryUtils::Quote($middleName) . "',
-                    '" . DbQueryUtils::Quote("") . "',
-                    '" . DbQueryUtils::Quote("") . "',
-                    '" . DbQueryUtils::Quote("male") . "',
-                    '" . DbQueryUtils::Quote("1985-09-20") . "',
-                    '" . DbQueryUtils::Quote("1985-09-20") . "',
-                    '" . DbQueryUtils::Quote($position) . "',
-                    '" . DbQueryUtils::Quote("") . "')";
+            VALUES ('" . DbQueryUtil::Quote($branchId) . "',
+                    '" . DbQueryUtil::Quote($name) . "',
+                    '" . DbQueryUtil::Quote($lastName) . "',
+                    '" . DbQueryUtil::Quote($middleName) . "',
+                    '" . DbQueryUtil::Quote("") . "',
+                    '" . DbQueryUtil::Quote("") . "',
+                    '" . DbQueryUtil::Quote("male") . "',
+                    '" . DbQueryUtil::Quote("1985-09-20") . "',
+                    '" . DbQueryUtil::Quote("1985-09-20") . "',
+                    '" . DbQueryUtil::Quote($position) . "',
+                    '" . DbQueryUtil::Quote("") . "')";
 
-        return DbQueryUtils::RealQuery($sql);
+        return DbQueryUtil::RealQuery($sql);
     }
 }
 

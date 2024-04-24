@@ -2,7 +2,7 @@
 
 namespace classes\dbTable;
 
-use classes\util\DbQueryUtils;
+use classes\util\DbQueryUtil;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/classes/util/dbQueryUtil.class.php';
 
@@ -15,6 +15,6 @@ class OrgStructureRequestTable
     {
         $sql = "SELECT * FROM company_branch";
 
-        return DbQueryUtils::Fetch($sql);
+        return DbQueryUtil::Fetch($sql);
     }
 }

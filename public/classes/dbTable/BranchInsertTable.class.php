@@ -2,27 +2,27 @@
 
 namespace classes\dbTable;
 
-use classes\util\DbQueryUtils;
+use classes\util\DbQueryUtil;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/classes/util/dbQueryUtil.class.php';
 
 class BranchInsertTable
 {
     /**
-     * @param $city
-     * @param $workersCount
-     * @param $address
+     * @param string $city
+     * @param int $workersCount
+     * @param string $address
      * @return bool
      */
-    public static function BranchDataInsert($city, $workersCount, $address)
+    public static function BranchDataInsert(string $city, int $workersCount, string $address): bool
     {
         $sql = "INSERT INTO company_branch 
             (city, workers_count, address)
-            VALUES ('" . DbQueryUtils::Quote($city) . "',
-                    '" . DbQueryUtils::Quote($workersCount) . "',
-                    '" . DbQueryUtils::Quote($address) . "')";
+            VALUES ('" . DbQueryUtil::Quote($city) . "',
+                    '" . DbQueryUtil::Quote($workersCount) . "',
+                    '" . DbQueryUtil::Quote($address) . "')";
 
-        return DbQueryUtils::RealQuery($sql);
+        return DbQueryUtil::RealQuery($sql);
     }
 }
 

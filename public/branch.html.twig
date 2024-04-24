@@ -10,8 +10,8 @@
         <div class="work-page__branches" id="branches">
             <div class="work-item">
                 <div class="branch-name">{{ loop.index }}</div>
-                <a class="worker-full-name" href="worker.php?id={{ row.id|trim }}">{{ row.first_name }} {{ row.last_name }} {{ row.middle_name }}</a>
-                <div class="worker-position">{{ row.position }}</div>
+                <a class="worker-full-name" href="worker.php?id={{ row.id|trim }}">Full name: {{ row.first_name }} {{ row.last_name }} {{ row.middle_name }}</a>
+                <div class="worker-position">Position: {{ row.position }}</div>
             </div>
         </div>
     {% endfor %}

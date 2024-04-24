@@ -2,14 +2,14 @@
 
 namespace classes\dbTable;
 
-use classes\util\DbQueryUtils;
+use classes\util\DbQueryUtil;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/classes/util/dbQueryUtil.class.php';
 
 class WorkerRequestTable
 {
     /**
-     * @param $id
+     * @param number $id
      * @return array
      */
     public static function GetInfoAboutWorker($id): array
@@ -19,9 +19,9 @@ class WorkerRequestTable
                 * 
             FROM 
                 user
-            WHERE id = " . DbQueryUtils::Quote($id) . "
+            WHERE id = " . DbQueryUtil::Quote($id) . "
         ";
 
-        return DbQueryUtils::Fetch($sql);
+        return DbQueryUtil::Fetch($sql);
     }
 }

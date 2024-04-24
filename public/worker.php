@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
-require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/classes/dbTable/WorkerRequestTable.class.php';
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/classes/dbTable/WorkerRequestTable.class.php';
 
 use classes\dbTable\WorkerRequestTable;
 use Twig\Environment;
