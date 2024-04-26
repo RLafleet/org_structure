@@ -11,15 +11,6 @@ function requestWorkerInformation(id, name, lastName, middleName, position) {
         '&middleName=' + encodeURIComponent(middleName) +
         '&position=' + encodeURIComponent(position);
 
-    /*
-      const params = new URLSearchParams({
-        id,
-        name,
-        lastName,
-        middleName,
-        position
-    });
-    */
     xhr.send(params);
     if (xhr.status != 200) {
         console.log("I am fall");

@@ -12,7 +12,7 @@ use Twig\Loader\FilesystemLoader;
 $TEMPLATE_NAME = "/branch.html.twig";
 
 $branchId = $_GET['id'] ?? "";
-$rows = BranchWorkersRequestTable::GetInfoAboutBranchesWorkers($branchId);
+$rows = BranchWorkersRequestTable::GetInfoAboutBranchesWorkers((int)$branchId);
 $loader = new FilesystemLoader(__DIR__);
 $twig = new Environment($loader);
 

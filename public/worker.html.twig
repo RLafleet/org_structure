@@ -5,21 +5,35 @@
     <title>Worker</title>
 </head>
 <div class="worker-container">
+    <div style="display: flex; flex-direction: row">
+        <a href="index.php" style="font-size: 30px;">Branches/</a>
+        <a href="branch.php?id={{ branch_id }}" style="font-size: 30px;">Workers</a>
+    </div>
+    <div style="display: none" id="worker" data-value="{{ row.id }}"></div>
+    <div style="display: none" id="branch" data-value="{{ branch_id }}"></div>
     <h1 class="worker-header">Worker {{ row.first_name }} {{ row.last_name }}</h1>
     <div class="worker-header__person">
         <ul>
             <li class="worker-item">
                 <label class="worker-label">
-                    <div class="worker-info">Full name: </div>
-                    <input class="worker-input" value="{{ row.first_name }} {{ row.last_name }} {{ row.middle_name }}">
+                    <div class="worker-info">Name: </div>
+                    <input id="name" class="worker-input" value="{{ row.first_name }}">
+                </label>
+                <label class="worker-label">
+                    <div class="worker-info">Middle name: </div>
+                    <input id="middleName" class="worker-input" value="{{ row.middle_name }}">
+                </label>
+                <label class="worker-label">
+                    <div class="worker-info">Last name: </div>
+                    <input id="lastName" class="worker-input" value="{{ row.last_name }}">
                 </label>
                 <label class="worker-label">
                     <div class="worker-info">Phone number: </div>
-                    <input class="worker-input" value="{{ row.phone_number }}">
+                    <input id="phoneNumber" class="worker-input" value="{{ row.phone_number }}">
                 </label>
                 <label class="worker-label">
                     <div class="worker-info">Email: </div>
-                    <input class="worker-input" value="{{ row.email }}">
+                    <input id="email" class="worker-input" value="{{ row.email }}">
                 </label>
                 <label class="worker-label">
                     <div class="worker-info">Sex: </div>
@@ -31,19 +45,19 @@
                 </label>
                 <label class="worker-label">
                     <div class="worker-info">Birth date: </div>
-                    <input class="worker-input" value="{{ row.birth_date }}">
+                    <input id="birthDate" class="worker-input" value="{{ row.birth_date }}">
                 </label>
                 <label class="worker-label">
                     <div class="worker-info">Hiring date: </div>
-                    <input class="worker-input" value="{{ row.hiring_date }}">
+                    <input id="hiringDate" class="worker-input" value="{{ row.hiring_date }}">
                 </label>
                 <label class="worker-label">
                     <div class="worker-info">Position: </div>
-                    <input class="worker-input" value="{{ row.position }}">
+                    <input id="position" class="worker-input" value="{{ row.position }}">
                 </label>
                 <label>
                     <div class="worker-info">Administrator comment: </div>
-                    <input class="worker-info__administrator-comment" value="{{ row.comment }}">
+                    <input id="comment" class="worker-info__administrator-comment" value="{{ row.comment }}">
                 </label>
             </li>
         </ul>
@@ -60,6 +74,8 @@
             </form>
         </div>
     </div>
-    <button>Save changes</button>
+    <button id="save">Save changes</button>
 </div>
 </html>
+
+<script type="module" src="js/simplyScripts/saveWorkerInfo.js"></script>
