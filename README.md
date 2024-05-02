@@ -1,2 +1,8 @@
 # org_structure
-It's study project about simply company org structure
+
+# Запуск приложения
+
+1) зайти в директорию public
+2) Запустить сервер
+``sudo php -S localhost:8000``
+3) Открыть в браузере http://localhost:8000

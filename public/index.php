@@ -4,25 +4,30 @@ declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/classes/dbTable/OrgStructureRequestTable.class.php';
 require_once __DIR__ . '/classes/dbTable/BranchInsertTable.class.php';
+require_once __DIR__ . '/classes/loader/TwigLoader.class.php';
 
 use classes\dbTable\BranchInsertTable;
 use classes\dbTable\OrgStructureRequestTable;
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
+use classes\loader\TwigLoader;
 
 $TEMPLATE_NAME = "/index.html.twig";
 
-//В отдельный класс
-$loader = new FilesystemLoader($_SERVER['DOCUMENT_ROOT']);
-$twig = new Environment($loader);
+$twig = TwigLoader::LoadTwigStable();
 
 $rows = OrgStructureRequestTable::GetInfoAboutOrgBranches();
 
 $city = $_POST['city'] ?? "";
 $workersCount = $_POST['workersCount'] ?? "";
 $address = $_POST['address'] ?? "";
-if(!empty($city) && !empty($workersCount) && !empty($address)) {
-    $result = BranchInsertTable::BranchDataInsert($city, (int)$workersCount, $address);
+
+try
+{
+    if(!empty($city) && !empty($workersCount) && !empty($address)) {
+        $result = BranchInsertTable::BranchDataInsert($city, (int)$workersCount, $address);
+    }
+} catch (\Exception $e)
+{
+    echo "Error: " . $e->getMessage();
 }
 
 echo $twig->render($TEMPLATE_NAME,

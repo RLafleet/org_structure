@@ -2,6 +2,7 @@
 declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/classes/dbTable/WorkerRequestTable.class.php';
+require_once __DIR__ . '/classes/dbTable/WorkerUpdate.class.php';
 
 use classes\dbTable\WorkerRequestTable;
 use classes\dbTable\WorkerUpdate;
@@ -39,10 +40,9 @@ if( !empty($name) &&
     !empty($comment) &&
     !empty($phoneNumber))
 {
-    print_r("dsa");
     $result = WorkerUpdate::WorkerUpdateInfo(
-        $worker_id,
-        $branchId,
+        (int)$worker_id,
+        (int)$branchId,
         $name,
         $lastName,
         $middleName,

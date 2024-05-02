@@ -2,8 +2,8 @@
 
 namespace classes\dbTable;
 
-use Cassandra\Date;
 use classes\util\DbQueryUtil;
+use DateTime;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/classes/util/dbQueryUtil.class.php';
 
@@ -18,8 +18,8 @@ class WorkerUpdate
      * @param string $position
      * @param string $sex Accepts either 'male' or 'female',
      * @param string $email
-     * @param Date $birthDate
-     * @param Date $hiringDate
+     * @param string $birthDate
+     * @param string $hiringDate
      * @param string $comment
      * @param string $phoneNumber
      * @return bool
@@ -32,11 +32,17 @@ class WorkerUpdate
                                             string $position,
                                             string $sex,
                                             string $email,
-                                            Date   $birthDate,
-                                            Date   $hiringDate,
+                                            string $birthDate,
+                                            string $hiringDate,
                                             string $comment,
                                             string $phoneNumber): bool
     {
+        $birthDateTime = new DateTime($birthDate);
+        $hiringDateTime = new DateTime($hiringDate);
+
+        $birthDateCassandra = $birthDateTime->format('Y-m-d');
+        $hiringDateCassandra = $hiringDateTime->format('Y-m-d');
+
         $sql = "UPDATE user SET
                 branch_id = '" . DbQueryUtil::Quote($branchId) . "',
                 first_name = '" . DbQueryUtil::Quote($name) . "',
@@ -45,8 +51,8 @@ class WorkerUpdate
                 phone_number = '" . DbQueryUtil::Quote($phoneNumber) . "',
                 email = '" . DbQueryUtil::Quote($email) . "',
                 sex = '" . DbQueryUtil::Quote($sex) . "',
-                birth_date = '" . DbQueryUtil::Quote($birthDate) . "',
-                hiring_date = '" . DbQueryUtil::Quote($hiringDate) . "',
+                birth_date = '" . DbQueryUtil::Quote($birthDateCassandra) . "',
+                hiring_date = '" . DbQueryUtil::Quote($hiringDateCassandra) . "',
                 position = '" . DbQueryUtil::Quote($position) . "',
                 comment = '" . DbQueryUtil::Quote($comment) . "'
                 WHERE id = '" . DbQueryUtil::Quote($workerId) . "'";
@@ -54,5 +60,3 @@ class WorkerUpdate
         return DbQueryUtil::RealQuery($sql);
     }
 }
-
-?>

@@ -21,6 +21,17 @@ class BranchInsertTable
             VALUES ('" . DbQueryUtil::Quote($city) . "',
                     '" . DbQueryUtil::Quote($workersCount) . "',
                     '" . DbQueryUtil::Quote($address) . "')";
+        try
+        {
+            $result = DbQueryUtil::RealQuery($sql);
+            if(!$result)
+            {
+                throw new \Exception("Failed to add new branch");
+            }
+        } catch (\Exception $e)
+        {
+            throw $e;
+        }
 
         return DbQueryUtil::RealQuery($sql);
     }

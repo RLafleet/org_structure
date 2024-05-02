@@ -17,12 +17,11 @@ function requestSaveWorkerChanges(params) {
         '&email=' + encodeURIComponent(params.email) +
         '&position=' + encodeURIComponent(params.position);
 
-    console.log(newParams);
-
     xhr.send(newParams);
     if (xhr.status != 200) {
         console.log( xhr.status + ': ' + xhr.statusText );
     } else {
+        location.reload();
     }
 }
 
