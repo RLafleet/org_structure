@@ -1,10 +1,9 @@
 <?php
 
-namespace classes\dbTable;
+namespace App\DbTable;
+require_once __DIR__ . '/../../public/vendor/autoload.php';
 
-use classes\util\DbQueryUtil;
-
-require_once $_SERVER['DOCUMENT_ROOT'] . '/classes/util/dbQueryUtil.class.php';
+use App\Util\DbQueryUtil;
 
 class WorkerTable
 {
@@ -15,6 +14,7 @@ class WorkerTable
      * @param string $middleName
      * @param string $position
      * @return void
+     * @throws \Exception
      */
     public static function WorkerDataInsert(int $branchId, string $name, string $lastName, string $middleName, string $position): void
     {
@@ -24,13 +24,13 @@ class WorkerTable
                     '" . DbQueryUtil::Quote($name) . "',
                     '" . DbQueryUtil::Quote($lastName) . "',
                     '" . DbQueryUtil::Quote($middleName) . "',
-                    '" . DbQueryUtil::Quote("") . "',
-                    '" . DbQueryUtil::Quote("") . "',
+                    '" . DbQueryUtil::Quote("Please, add phone number") . "',
+                    '" . DbQueryUtil::Quote("Please, add email") . "',
                     '" . DbQueryUtil::Quote("male") . "',
                     '" . DbQueryUtil::Quote("1985-09-20") . "',
                     '" . DbQueryUtil::Quote("1985-09-20") . "',
                     '" . DbQueryUtil::Quote($position) . "',
-                    '" . DbQueryUtil::Quote("") . "')";
+                    '" . DbQueryUtil::Quote("Please, add comment") . "')";
         $result = DbQueryUtil::RealQuery($sql);
 
         if (!$result) {
@@ -41,6 +41,7 @@ class WorkerTable
     /**
      * @param int $worker_id
      * @return void
+     * @throws \Exception
      */
     public static function WorkerDataDelete(int $worker_id): void
     {

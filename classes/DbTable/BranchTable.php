@@ -1,10 +1,9 @@
 <?php
 
-namespace classes\dbTable;
+namespace App\DbTable;
+require_once __DIR__ . '/../../public/vendor/autoload.php';
 
-use classes\util\DbQueryUtil;
-
-require_once $_SERVER['DOCUMENT_ROOT'] . '/classes/util/dbQueryUtil.class.php';
+use App\Util\dbQueryUtil;
 
 class BranchTable
 {
@@ -13,6 +12,7 @@ class BranchTable
      * @param int $workersCount
      * @param string $address
      * @return void
+     * @throws \Exception
      */
     public static function BranchDataInsert(string $city, int $workersCount, string $address): void
     {
@@ -31,6 +31,7 @@ class BranchTable
     /**
      * @param int $branch_id
      * @return void
+     * @throws \Exception
      */
     public static function BranchDataDelete(int $branch_id): void
     {
@@ -47,5 +48,3 @@ class BranchTable
         }
     }
 }
-
-?>

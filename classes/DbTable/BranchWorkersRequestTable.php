@@ -1,10 +1,9 @@
 <?php
 
-namespace classes\dbTable;
+namespace App\DbTable;
+require_once __DIR__ . '/../../public/vendor/autoload.php';
 
-use classes\util\DbQueryUtil;
-
-require_once $_SERVER['DOCUMENT_ROOT'] . '/classes/util/dbQueryUtil.class.php';
+use App\Util\dbQueryUtil;
 
 class BranchWorkersRequestTable
 {

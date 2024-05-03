@@ -1,15 +1,11 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/classes/dbTable/WorkerRequestTable.class.php';
-require_once __DIR__ . '/classes/dbTable/WorkerUpdate.class.php';
-require_once __DIR__ . '/classes/loader/TwigLoader.class.php';
-require_once __DIR__ . '/classes/util/PostParameterHandler.class.php';
 
-use classes\dbTable\WorkerRequestTable;
-use classes\dbTable\WorkerUpdate;
-use classes\loader\TwigLoader;
-use classes\util\PostParameterHandler;
+use App\DbTable\WorkerRequestTable;
+use App\DbTable\WorkerUpdate;
+use App\Loader\TwigLoader;
+use App\Util\PostParameterHandler;
 
 $twig = TwigLoader::LoadTwigStable();
 

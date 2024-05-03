@@ -1,11 +1,10 @@
 <?php
 
-namespace classes\dbTable;
+namespace App\DbTable;
+require_once __DIR__ . '/../../public/vendor/autoload.php';
 
-use classes\util\DbQueryUtil;
+use App\Util\DbQueryUtil;
 use DateTime;
-
-require_once $_SERVER['DOCUMENT_ROOT'] . '/classes/util/dbQueryUtil.class.php';
 
 class WorkerUpdate
 {
@@ -16,13 +15,14 @@ class WorkerUpdate
      * @param string $lastName
      * @param string $middleName
      * @param string $email
-     * @param string $sex Accepts either 'male' or 'female',
+     * @param string $sex
      * @param string $birthDate
      * @param string $hiringDate
      * @param string $position
      * @param string $comment
      * @param string $phoneNumber
      * @return void
+     * @throws \Exception
      */
     public static function WorkerUpdateInfo(int $workerId,
                                             int    $branchId,

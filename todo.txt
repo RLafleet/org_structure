@@ -11,3 +11,6 @@ mysqli::query will return a result if there is any.
 mysql::real_query will return true on success or false if not
 
 +Отлавливать исключения и ошибки
+
+breadCrumb
+в connection долбавить dbQueryUtil и сделать это не статической функцией

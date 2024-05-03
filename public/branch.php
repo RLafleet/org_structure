@@ -1,13 +1,10 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/classes/dbTable/BranchWorkersRequestTable.class.php';
-require_once __DIR__ . '/classes/dbTable/WorkerTable.class.php';
-require_once __DIR__ . '/classes/loader/TwigLoader.class.php';
 
-use classes\dbTable\BranchWorkersRequestTable;
-use classes\dbTable\WorkerTable;
-use classes\loader\TwigLoader;
+use App\DbTable\BranchWorkersRequestTable;
+use App\DbTable\WorkerTable;
+use App\Loader\TwigLoader;
 
 $twig = TwigLoader::LoadTwigStable();
 
@@ -21,12 +18,12 @@ $lastName = $_POST['lastName'] ?? "";
 $middleName = $_POST['middleName'] ?? "";
 $position = $_POST['position'] ?? "";
 
-try {
-    if (!empty($name) && !empty($lastName) && !empty($middleName) && !empty($position)) {
-        WorkerTable::WorkerDataInsert($branchId, $name, $lastName, $middleName, $position);
+if (!empty($name) && !empty($lastName) && !empty($middleName) && !empty($position)) {
+    try {
+            WorkerTable::WorkerDataInsert($branchId, $name, $lastName, $middleName, $position);
+    } catch (\Exception $e) {
+        echo "Error: " . $e->getMessage();
     }
-} catch (\Exception $e) {
-    echo "Error: " . $e->getMessage();
 }
 
 echo $twig->render($TEMPLATE_NAME,

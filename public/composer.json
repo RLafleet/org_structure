@@ -1,11 +1,11 @@
 {
     "autoload": {
         "psr-4": {
-            "Twig\\": "public/vendor/twig/twig/src/"
+            "App\\": "../classes/"
         }
     },
     "require": {
         "twig/twig": "^3.8",
-      "ext-cassandra": "*"
+        "ext-mysqli": "*"
     }
 }

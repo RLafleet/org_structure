@@ -1,13 +1,11 @@
 <?php
 
-namespace classes\util;
+namespace App\Util;
+require_once __DIR__ . '/../../public/vendor/autoload.php';
 
-use classes\connection\OrgStructureConnection;
+use App\Connection\ConnectionProvider;
 use mysqli;
 use mysqli_result;
-
-require_once $_SERVER['DOCUMENT_ROOT'] . '/classes/connection/OrgStructureConnection.class.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/classes/config/DbConfig.class.php';
 
 class DbQueryUtil
 {
@@ -17,7 +15,7 @@ class DbQueryUtil
      */
     public static function RealQuery(string $sql): bool
     {
-        $connection = OrgStructureConnection::GetDbConnection();
+        $connection = ConnectionProvider::getConnection();
         return mysqli_real_query($connection, $sql);
     }
 
@@ -45,18 +43,18 @@ class DbQueryUtil
      */
     public static function Quote(string $str): string
     {
-        $connection = OrgStructureConnection::GetDbConnection();
+        $connection = ConnectionProvider::getConnection();
         return mysqli_real_escape_string($connection, $str);
     }
+    //настоящий класс connection с query с Quote
 
     /**
      * @param string $sql
      * @return bool|mysqli_result
      */
-    private static function Query(string $sql)
+    private static function Query(string $sql): mysqli_result|bool
     {
-        $connection = OrgStructureConnection::GetDbConnection();
+        $connection = ConnectionProvider::getConnection();
         return mysqli_query($connection, $sql);
     }
 }
-?>

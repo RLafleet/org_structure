@@ -1,13 +1,10 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/classes/dbTable/OrgStructureRequestTable.class.php';
-require_once __DIR__ . '/classes/dbTable/BranchTable.class.php';
-require_once __DIR__ . '/classes/loader/TwigLoader.class.php';
 
-use classes\dbTable\BranchTable;
-use classes\dbTable\OrgStructureRequestTable;
-use classes\loader\TwigLoader;
+use App\DbTable\BranchTable;
+use App\DbTable\OrgStructureRequestTable;
+use App\Loader\TwigLoader;
 
 $TEMPLATE_NAME = "/index.html.twig";
 
@@ -31,4 +28,3 @@ if (!empty($city) && !empty($address)) {
 echo $twig->render($TEMPLATE_NAME,
     ['rows' => $rows]
 );
-?>
