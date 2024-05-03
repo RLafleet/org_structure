@@ -3,7 +3,7 @@
 namespace App\DbTable;
 require_once __DIR__ . '/../../public/vendor/autoload.php';
 
-use App\Util\DbQueryUtil;
+use App\connection\ConnectionProvider;
 use DateTime;
 
 class WorkerUpdate
@@ -44,20 +44,20 @@ class WorkerUpdate
         $hiringDateCassandra = $hiringDateTime->format('Y-m-d');
 
         $sql = "UPDATE user SET
-                branch_id = '" . DbQueryUtil::Quote($branchId) . "',
-                first_name = '" . DbQueryUtil::Quote($name) . "',
-                last_name = '" . DbQueryUtil::Quote($lastName) . "',
-                middle_name = '" . DbQueryUtil::Quote($middleName) . "',
-                phone_number = '" . DbQueryUtil::Quote($phoneNumber) . "',
-                email = '" . DbQueryUtil::Quote($email) . "',
-                sex = '" . DbQueryUtil::Quote($sex) . "',
-                birth_date = '" . DbQueryUtil::Quote($birthDateCassandra) . "',
-                hiring_date = '" . DbQueryUtil::Quote($hiringDateCassandra) . "',
-                position = '" . DbQueryUtil::Quote($position) . "',
-                comment = '" . DbQueryUtil::Quote($comment) . "'
-                WHERE id = '" . DbQueryUtil::Quote($workerId) . "'";
+                branch_id = '" . ConnectionProvider::Quote($branchId) . "',
+                first_name = '" . ConnectionProvider::Quote($name) . "',
+                last_name = '" . ConnectionProvider::Quote($lastName) . "',
+                middle_name = '" . ConnectionProvider::Quote($middleName) . "',
+                phone_number = '" . ConnectionProvider::Quote($phoneNumber) . "',
+                email = '" . ConnectionProvider::Quote($email) . "',
+                sex = '" . ConnectionProvider::Quote($sex) . "',
+                birth_date = '" . ConnectionProvider::Quote($birthDateCassandra) . "',
+                hiring_date = '" . ConnectionProvider::Quote($hiringDateCassandra) . "',
+                position = '" . ConnectionProvider::Quote($position) . "',
+                comment = '" . ConnectionProvider::Quote($comment) . "'
+                WHERE id = '" . ConnectionProvider::Quote($workerId) . "'";
 
-        $result = DbQueryUtil::RealQuery($sql);
+        $result = ConnectionProvider::RealQuery($sql);
 
         if (!$result) {
             throw new \Exception("Failed to update user data");

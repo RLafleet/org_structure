@@ -3,7 +3,7 @@
 namespace App\DbTable;
 require_once __DIR__ . '/../../public/vendor/autoload.php';
 
-use App\Util\DbQueryUtil;
+use App\connection\ConnectionProvider;
 
 class WorkerTable
 {
@@ -20,18 +20,18 @@ class WorkerTable
     {
         $sql = "INSERT INTO user 
             (branch_id, first_name, last_name, middle_name, phone_number, email, sex, birth_date, hiring_date, position, comment)
-            VALUES ('" . DbQueryUtil::Quote($branchId) . "',
-                    '" . DbQueryUtil::Quote($name) . "',
-                    '" . DbQueryUtil::Quote($lastName) . "',
-                    '" . DbQueryUtil::Quote($middleName) . "',
-                    '" . DbQueryUtil::Quote("Please, add phone number") . "',
-                    '" . DbQueryUtil::Quote("Please, add email") . "',
-                    '" . DbQueryUtil::Quote("male") . "',
-                    '" . DbQueryUtil::Quote("1985-09-20") . "',
-                    '" . DbQueryUtil::Quote("1985-09-20") . "',
-                    '" . DbQueryUtil::Quote($position) . "',
-                    '" . DbQueryUtil::Quote("Please, add comment") . "')";
-        $result = DbQueryUtil::RealQuery($sql);
+            VALUES ('" . ConnectionProvider::Quote($branchId) . "',
+                    '" . ConnectionProvider::Quote($name) . "',
+                    '" . ConnectionProvider::Quote($lastName) . "',
+                    '" . ConnectionProvider::Quote($middleName) . "',
+                    '" . ConnectionProvider::Quote("Please, add phone number") . "',
+                    '" . ConnectionProvider::Quote("Please, add email") . "',
+                    '" . ConnectionProvider::Quote("male") . "',
+                    '" . ConnectionProvider::Quote("1985-09-20") . "',
+                    '" . ConnectionProvider::Quote("1985-09-20") . "',
+                    '" . ConnectionProvider::Quote($position) . "',
+                    '" . ConnectionProvider::Quote("Please, add comment") . "')";
+        $result = ConnectionProvider::RealQuery($sql);
 
         if (!$result) {
             throw new \Exception("Failed to add user for branch");
@@ -45,8 +45,8 @@ class WorkerTable
      */
     public static function WorkerDataDelete(int $worker_id): void
     {
-        $sql = "DELETE FROM user WHERE id='" . DbQueryUtil::Quote($worker_id) . "'";
-        $deleteUser = DbQueryUtil::RealQuery($sql);
+        $sql = "DELETE FROM user WHERE id='" . ConnectionProvider::Quote($worker_id) . "'";
+        $deleteUser = ConnectionProvider::RealQuery($sql);
         if (!$deleteUser) {
             throw new \Exception("Failed to delete users for branch");
         }

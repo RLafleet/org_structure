@@ -3,7 +3,7 @@
 namespace App\DbTable;
 require_once __DIR__ . '/../../public/vendor/autoload.php';
 
-use App\Util\dbQueryUtil;
+use App\Connection\ConnectionProvider;
 
 class BranchWorkersRequestTable
 {
@@ -18,9 +18,9 @@ class BranchWorkersRequestTable
                 * 
             FROM 
                 user
-            WHERE branch_id = " . DbQueryUtil::Quote($worker_id) . "
+            WHERE branch_id = " . ConnectionProvider::Quote($worker_id) . "
         ";
 
-        return DbQueryUtil::Fetch($sql);
+        return ConnectionProvider::Fetch($sql);
     }
 }
