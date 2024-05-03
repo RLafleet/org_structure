@@ -3,9 +3,6 @@
 +/post.php?id
 +xml learn.javascript.ru
 
-xdebug
-
-Исправить классы базы данных согласно лонгрилу шаблона работы с бд
 +typehint везде
 +dbQueryUtils DbQueryUtil
 +разобраться с разницей между RealQuery, Query
@@ -13,6 +10,4 @@ mysqli::query will return a result if there is any.
 
 mysql::real_query will return true on success or false if not
 
-You could have seen this in the php doc:
-
-Отлавливать исключения и ошибки mysqli
++Отлавливать исключения и ошибки

@@ -3,11 +3,15 @@ declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/classes/dbTable/WorkerRequestTable.class.php';
 require_once __DIR__ . '/classes/dbTable/WorkerUpdate.class.php';
+require_once __DIR__ . '/classes/loader/TwigLoader.class.php';
+require_once __DIR__ . '/classes/util/PostParameterHandler.class.php';
 
 use classes\dbTable\WorkerRequestTable;
 use classes\dbTable\WorkerUpdate;
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
+use classes\loader\TwigLoader;
+use classes\util\PostParameterHandler;
+
+$twig = TwigLoader::LoadTwigStable();
 
 $TEMPLATE_NAME = "/worker.html.twig";
 
@@ -15,45 +19,20 @@ $worker_id = $_GET['id'] ?? '';
 $branchId = $_GET['branch_id'] ?? '';
 $rows = WorkerRequestTable::GetInfoAboutWorker($worker_id);
 
-$name = $_POST['name'] ?? "";
-$lastName = $_POST['lastName'] ?? "";
-$middleName = $_POST['middleName'] ?? "";
-$email = $_POST['email'] ?? "";
-$sex = $_POST['sex'] ?? "";
-$birth_date = $_POST['birthDate'] ?? "";
-$hiring_date = $_POST['hiringDate'] ?? "";
-$position = $_POST['position'] ?? "";
-$comment = $_POST['comment'] ?? "";
-$phoneNumber = $_POST['phoneNumber'] ?? "";
+$params = ['name', 'lastName', 'middleName', 'email', 'sex', 'birthDate', 'hiringDate', 'position', 'comment', 'phoneNumber'];
+$postParams = [];
+foreach ($params as $param) {
+    $postParams[$param] = PostParameterHandler::GetParameter($param);
+}
 
-$loader = new FilesystemLoader(__DIR__);
-$twig = new Environment($loader);
-
-if( !empty($name) &&
-    !empty($lastName) &&
-    !empty($middleName) &&
-    !empty($position) &&
-    !empty($sex) &&
-    !empty($email) &&
-    !empty($birth_date) &&
-    !empty($hiring_date) &&
-    !empty($comment) &&
-    !empty($phoneNumber))
-{
-    $result = WorkerUpdate::WorkerUpdateInfo(
-        (int)$worker_id,
-        (int)$branchId,
-        $name,
-        $lastName,
-        $middleName,
-        $position,
-        $sex,
-        $email,
-        $birth_date,
-        $hiring_date,
-        $comment,
-        $phoneNumber
-    );
+$IsElemsArrayEmpty = in_array('', $postParams, true);
+if (!$IsElemsArrayEmpty) {
+    try
+    {
+        WorkerUpdate::WorkerUpdateInfo((int)$worker_id, (int)$branchId, ...array_values($postParams));
+    } catch (\Exception $e) {
+    echo "Error: " . $e->getMessage();
+    }
 }
 
 echo $twig->render($TEMPLATE_NAME,

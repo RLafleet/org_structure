@@ -15,27 +15,27 @@ class WorkerUpdate
      * @param string $name
      * @param string $lastName
      * @param string $middleName
-     * @param string $position
-     * @param string $sex Accepts either 'male' or 'female',
      * @param string $email
+     * @param string $sex Accepts either 'male' or 'female',
      * @param string $birthDate
      * @param string $hiringDate
+     * @param string $position
      * @param string $comment
      * @param string $phoneNumber
-     * @return bool
+     * @return void
      */
     public static function WorkerUpdateInfo(int $workerId,
                                             int    $branchId,
                                             string $name,
                                             string $lastName,
                                             string $middleName,
-                                            string $position,
-                                            string $sex,
                                             string $email,
+                                            string $sex,
                                             string $birthDate,
                                             string $hiringDate,
+                                            string $position,
                                             string $comment,
-                                            string $phoneNumber): bool
+                                            string $phoneNumber): void
     {
         $birthDateTime = new DateTime($birthDate);
         $hiringDateTime = new DateTime($hiringDate);
@@ -57,6 +57,10 @@ class WorkerUpdate
                 comment = '" . DbQueryUtil::Quote($comment) . "'
                 WHERE id = '" . DbQueryUtil::Quote($workerId) . "'";
 
-        return DbQueryUtil::RealQuery($sql);
+        $result = DbQueryUtil::RealQuery($sql);
+
+        if (!$result) {
+            throw new \Exception("Failed to update user data");
+        }
     }
 }

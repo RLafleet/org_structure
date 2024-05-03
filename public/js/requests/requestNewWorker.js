@@ -13,11 +13,10 @@ function requestWorkerInformation(id, name, lastName, middleName, position) {
 
     xhr.send(params);
     if (xhr.status != 200) {
-        console.log("I am fall");
         console.log( xhr.status + ': ' + xhr.statusText );
     } else
     {
-        // location.reload()
+        location.reload()
     }
 }
 
