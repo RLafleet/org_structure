@@ -13,14 +13,15 @@ class BranchWorkersRequestTable
      */
     public static function GetInfoAboutBranchesWorkers(int $worker_id): array
     {
+        $connectionProvider = new ConnectionProvider();
         $sql = "
             SELECT 
                 * 
             FROM 
                 user
-            WHERE branch_id = " . ConnectionProvider::Quote($worker_id) . "
+            WHERE branch_id = " . $connectionProvider->Quote($worker_id) . "
         ";
 
-        return ConnectionProvider::Fetch($sql);
+        return $connectionProvider->Fetch($sql);
     }
 }

@@ -11,8 +11,8 @@ class OrgStructureRequestTable
      */
     public static function GetInfoAboutOrgBranches(): array
     {
-        $sql = "SELECT * FROM company_branch";
         $connectionProvider = new ConnectionProvider();
+        $sql = "SELECT * FROM company_branch";
         return $connectionProvider->Fetch($sql);
     }
 }

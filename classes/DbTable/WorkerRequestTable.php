@@ -13,14 +13,15 @@ class WorkerRequestTable
      */
     public static function GetInfoAboutWorker($id): array
     {
+        $connectionProvider = new ConnectionProvider();
         $sql = "
             SELECT 
                 * 
             FROM 
                 user
-            WHERE id = " . ConnectionProvider::Quote($id) . "
+            WHERE id = " . $connectionProvider->Quote($id) . "
         ";
 
-        return ConnectionProvider::Fetch($sql);
+        return $connectionProvider->Fetch($sql);
     }
 }

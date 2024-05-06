@@ -5,6 +5,7 @@ require_once __DIR__ . '/../../public/vendor/autoload.php';
 
 use App\connection\ConnectionProvider;
 use DateTime;
+use Exception;
 
 class WorkerUpdate
 {
@@ -22,7 +23,7 @@ class WorkerUpdate
      * @param string $comment
      * @param string $phoneNumber
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public static function WorkerUpdateInfo(int $workerId,
                                             int    $branchId,
@@ -43,24 +44,25 @@ class WorkerUpdate
         $birthDateCassandra = $birthDateTime->format('Y-m-d');
         $hiringDateCassandra = $hiringDateTime->format('Y-m-d');
 
+        $connectionProvider =  new ConnectionProvider();
         $sql = "UPDATE user SET
-                branch_id = '" . ConnectionProvider::Quote($branchId) . "',
-                first_name = '" . ConnectionProvider::Quote($name) . "',
-                last_name = '" . ConnectionProvider::Quote($lastName) . "',
-                middle_name = '" . ConnectionProvider::Quote($middleName) . "',
-                phone_number = '" . ConnectionProvider::Quote($phoneNumber) . "',
-                email = '" . ConnectionProvider::Quote($email) . "',
-                sex = '" . ConnectionProvider::Quote($sex) . "',
-                birth_date = '" . ConnectionProvider::Quote($birthDateCassandra) . "',
-                hiring_date = '" . ConnectionProvider::Quote($hiringDateCassandra) . "',
-                position = '" . ConnectionProvider::Quote($position) . "',
-                comment = '" . ConnectionProvider::Quote($comment) . "'
-                WHERE id = '" . ConnectionProvider::Quote($workerId) . "'";
+                branch_id = '" . $connectionProvider->Quote($branchId) . "',
+                first_name = '" . $connectionProvider->Quote($name) . "',
+                last_name = '" . $connectionProvider->Quote($lastName) . "',
+                middle_name = '" . $connectionProvider->Quote($middleName) . "',
+                phone_number = '" . $connectionProvider->Quote($phoneNumber) . "',
+                email = '" . $connectionProvider->Quote($email) . "',
+                sex = '" . $connectionProvider->Quote($sex) . "',
+                birth_date = '" . $connectionProvider->Quote($birthDateCassandra) . "',
+                hiring_date = '" . $connectionProvider->Quote($hiringDateCassandra) . "',
+                position = '" . $connectionProvider->Quote($position) . "',
+                comment = '" . $connectionProvider->Quote($comment) . "'
+                WHERE id = '" . $connectionProvider->Quote($workerId) . "'";
 
-        $result = ConnectionProvider::RealQuery($sql);
+        $result = $connectionProvider->RealQuery($sql);
 
         if (!$result) {
-            throw new \Exception("Failed to update user data");
+            throw new Exception("Failed to update user data");
         }
     }
 }

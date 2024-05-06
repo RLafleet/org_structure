@@ -25,6 +25,10 @@ if (!empty($city) && !empty($address)) {
 }
 
 
-echo $twig->render($TEMPLATE_NAME,
-    ['rows' => $rows]
-);
+try {
+    echo $twig->render($TEMPLATE_NAME,
+        ['rows' => $rows]
+    );
+} catch (\Twig\Error\LoaderError|\Twig\Error\RuntimeError|\Twig\Error\SyntaxError $e) {
+    echo $e->getMessage();
+}
