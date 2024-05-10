@@ -31,7 +31,7 @@ export function addBranchForm() {
         return;
     }
 
-    requestBranchInformation(city.value, name.value, workersCount.value, address.value);
+    requestBranchInformation(city.value, workersCount.value, address.value);
     setTimeout(function () {
         newBranchForm(DISPLAY_FLEX, DISPLAY_NONE);
     }, 300);

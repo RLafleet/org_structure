@@ -49,4 +49,27 @@ class BranchTable
             throw new \Exception("Failed to add new branch");
         }
     }
+
+    /**
+     * @param int $id
+     * @param string $city
+     * @param int $workersCount
+     * @param string $address
+     * @return void
+     * @throws \Exception
+     */
+    public static function BranchDataUpdate(int $id, string $city, int $workersCount, string $address): void
+    {
+        $connectionProvider = new ConnectionProvider();
+        $sql = "UPDATE company_branch SET 
+                workers_count = '" . $connectionProvider->Quote($workersCount) . "',
+                city = '" . $connectionProvider->Quote($city) . "',
+                address = '" . $connectionProvider->Quote($address) . "'
+                WHERE id = '" . $connectionProvider->Quote($id) . "'";
+        $result = $connectionProvider->RealQuery($sql);
+
+        if (!$result) {
+            throw new \Exception("Failed to add new branch");
+        }
+    }
 }

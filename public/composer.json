@@ -6,6 +6,7 @@
     },
     "require": {
         "twig/twig": "^3.8",
-        "ext-mysqli": "*"
+        "ext-mysqli": "*",
+      "ext-gd": "*"
     }
 }

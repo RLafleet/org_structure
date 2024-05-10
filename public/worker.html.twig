@@ -62,14 +62,10 @@
             </li>
         </ul>
         <div>
-            {% if row.sex == "female" %}
-                <img class="person-image" src="static/women.jpg" alt="women_incognito_pict">
-            {% elseif row.sex == "male" %}
-                <img class="person-image" src="static/man.jpg" alt="man_incognito_pict">
-            {% endif %}
-            <form class="person-form" enctype="multipart/form-data" method="post">
+            <img id="img" class="person-image" src="static/worker-img-{{ row.id }}.png" alt="worker_photo">
+            <form class="person-form" enctype="multipart/form-data" method="post" action="saveWorkerImg.php?id={{ row.id }}&branch_id={{ branch_id }}">
                 <p>Загрузите ваши фотографии на сервер</p>
-                <p><input type="file" name="photo" multiple accept="image/*,image/jpeg">
+                <p><input id="img_loader" type="file" name="photo" multiple accept="image/*,image/jpeg">
                     <input type="submit" value="Отправить"></p>
             </form>
         </div>
@@ -78,4 +74,11 @@
 </div>
 </html>
 
+<script>
+    document.getElementById('img_loader').onchange = event => {
+        let reader = new FileReader();
+        reader.onload = e => document.getElementById('img').src = e.target.result;
+        reader.readAsDataURL(event.target.files[0]);
+    };
+</script>
 <script type="module" src="js/simplyScripts/saveWorkerInfo.js"></script>

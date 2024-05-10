@@ -1,14 +1,12 @@
-function requestSaveBranchChanges(params) {
+function requestSaveBranchChanges(branchId, city, workersCount, address) {
     var xhr = new XMLHttpRequest();
-
-    xhr.open('POST', 'updateBranch.php?id=' + params.branchId);
-
+    xhr.open('POST', 'updateBranch.php?id=' + branchId);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
     const newParams =
-        'city=' + encodeURIComponent(params.city) +
-        '&address=' + encodeURIComponent(params.address) +
-        '&workers_count=' + encodeURIComponent(params.workers_count);
+        'city=' + encodeURIComponent(city) +
+        '&address=' + encodeURIComponent(address) +
+        '&workers_count=' + encodeURIComponent(workersCount);
 
     xhr.send(newParams);
     if (xhr.status != 200) {
@@ -18,4 +16,4 @@ function requestSaveBranchChanges(params) {
     }
 }
 
-export { requestSaveWorkerChanges };
+export { requestSaveBranchChanges };

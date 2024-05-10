@@ -1,4 +1,4 @@
-function requestBranchInformation(city, name, workersCount, address) {
+function requestBranchInformation(city, workersCount, address) {
     var xhr = new XMLHttpRequest();
 
     xhr.open('POST', 'index.php', false);

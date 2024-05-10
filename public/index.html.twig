@@ -12,12 +12,12 @@
     {% for row in rows %}
         <div class="work-page__branches">
             <div class="work-item">
-                <div style="visibility: hidden">{{ row.id }}</div>
-                <div class="work-id">{{ loop.index }}</div>
+                <div id="branch-id" style="visibility: hidden">{{ row.id }}</div>
+                <a href="branch.php?id={{ row.id|trim }}" class="work-id">{{ loop.index }}</a>
                 <div class="branch-container">
-                    <a class="address" href="branch.php?id={{ row.id|trim }}">Address: {{ row.address }}</a>
-                    <div class="city">City: {{ row.city }}</div>
-                    <div class="workers-count">Count of workers: {{ row.workers_count }}</div>
+                    <span class="address">Address: {{ row.address }}</span>
+                    <span class="city">City: {{ row.city }}</span>
+                    <span class="workers-count">Count of workers: {{ row.workers_count }}</span>
                     <form method="post" action="deleteBranch.php">
                         <input type="hidden" name="branch_id" value="{{ row.id|trim }}">
                         <button type="submit" onclick="return confirm('Are you sure you want to delete this branch?')">Delete</button>

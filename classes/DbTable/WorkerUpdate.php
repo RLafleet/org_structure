@@ -65,4 +65,22 @@ class WorkerUpdate
             throw new Exception("Failed to update user data");
         }
     }
+
+    /**
+     * @param int $workerId
+     * @param int $branchId
+     * @return void
+     * @throws Exception
+     */
+    public static function WorkerSaveInfoAboutImg(int $workerId, int $branchId) : void
+    {
+        $connectionProvider =  new ConnectionProvider();
+        $sql = "";
+
+        $result = $connectionProvider->RealQuery($sql);
+
+        if (!$result) {
+            throw new Exception("Failed to update user data");
+        }
+    }
 }
