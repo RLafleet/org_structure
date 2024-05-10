@@ -2,10 +2,10 @@
 declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
 
-use App\DbTable\BranchWorkers;
+use App\DbTable\BranchWorkersHandler;
 use App\DbTable\WorkerTable;
 use App\Loader\TwigLoader;
-use App\DbTable\OrgStructureRequestTable;
+use App\DbTable\BranchTable;
 
 
 $twig = TwigLoader::LoadTwigStable();
@@ -13,8 +13,8 @@ $twig = TwigLoader::LoadTwigStable();
 $TEMPLATE_NAME = "/branch.html.twig";
 
 $branchId = intval($_GET['id'] ?? "");
-$rows = BranchWorkers::GetInfoAboutBranchesWorkers($branchId);
-$branchInfo = OrgStructureRequestTable::GetInfoAboutOrgBranch($branchId);
+$rows = BranchWorkersHandler::GetInfoAboutBranchesWorkers($branchId);
+$branchInfo = BranchTable::GetBranch($branchId);
 
 $name = $_POST['name'] ?? "";
 $lastName = $_POST['lastName'] ?? "";

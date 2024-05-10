@@ -6,17 +6,14 @@ try {
     $workerId = intval($_GET['id'] ?? "");
     $branchId = intval($_GET['branch_id'] ?? "");
 
-    // Путь к папке, куда будут сохраняться изображения
     $uploadDirectory = __DIR__ . '/static/';
 
-    // Проверяем, был ли загружен файл
     if(isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
         $fileTmpPath = $_FILES['photo']['tmp_name'];
         $fileName = $_FILES['photo']['name'];
         $fileSize = $_FILES['photo']['size'];
         $fileType = $_FILES['photo']['type'];
 
-        // Генерируем новое имя файла
         $newFileName = 'worker-img-' . $workerId . '.png';
 
         $uploadFilePath = $uploadDirectory . $newFileName;

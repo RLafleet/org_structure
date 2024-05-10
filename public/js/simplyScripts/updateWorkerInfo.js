@@ -1,4 +1,4 @@
-import {requestSaveWorkerChanges} from "../requests/requestSaveWorkerChanges.js";
+import {requestUpdateWorkerChanges} from "../requests/requestUpdateWorkerChanges.js";
 
 const WORKER_ID = "worker";
 const BRANCH_ID = "branch"
@@ -45,5 +45,5 @@ saveChangesButton.addEventListener('click', function(event) {
         comment: commentInput.value
     };
 
-    requestSaveWorkerChanges(params);
+    requestUpdateWorkerChanges(params);
 });

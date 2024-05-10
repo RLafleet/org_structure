@@ -2,8 +2,7 @@
 declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
 
-use App\DbTable\WorkerRequestTable;
-use App\DbTable\WorkerUpdate;
+use App\DbTable\WorkerTable;
 use App\Loader\TwigLoader;
 use App\Util\PostParameterHandler;
 
@@ -13,7 +12,7 @@ $TEMPLATE_NAME = "/worker.html.twig";
 
 $worker_id = $_GET['id'] ?? '';
 $branchId = $_GET['branch_id'] ?? '';
-$rows = WorkerRequestTable::GetInfoAboutWorker($worker_id);
+$rows = WorkerTable::GetInfoAboutWorker($worker_id);
 
 $params = ['name', 'lastName', 'middleName', 'email', 'sex', 'birthDate', 'hiringDate', 'position', 'comment', 'phoneNumber'];
 $postParams = [];
@@ -25,7 +24,7 @@ $IsElemsArrayEmpty = in_array('', $postParams, true);
 if (!$IsElemsArrayEmpty) {
     try
     {
-        WorkerUpdate::WorkerUpdateInfo((int)$worker_id, (int)$branchId, ...array_values($postParams));
+        WorkerTable::WorkerUpdateInfo((int)$worker_id, (int)$branchId, ...array_values($postParams));
     } catch (\Exception $e) {
     echo "Error: " . $e->getMessage();
     }

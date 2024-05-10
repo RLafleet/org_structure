@@ -1,4 +1,4 @@
-function requestSaveWorkerChanges(params) {
+function requestUpdateWorkerChanges(params) {
     var xhr = new XMLHttpRequest();
 
     xhr.open('POST', 'worker.php?id=' + params.workerId +"&branch_id=" + params.branchId, false);
@@ -25,4 +25,4 @@ function requestSaveWorkerChanges(params) {
     }
 }
 
-export { requestSaveWorkerChanges };
+export { requestUpdateWorkerChanges };

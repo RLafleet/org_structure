@@ -1,4 +1,4 @@
-function requestSaveBranchChanges(branchId, city, workersCount, address) {
+function requestUpdateBranchChanges(branchId, city, workersCount, address) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'updateBranch.php?id=' + branchId);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -16,4 +16,4 @@ function requestSaveBranchChanges(branchId, city, workersCount, address) {
     }
 }
 
-export { requestSaveBranchChanges };
+export { requestUpdateBranchChanges };

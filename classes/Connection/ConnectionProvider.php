@@ -7,6 +7,7 @@ use App\config\DbConfig;
 use mysqli;
 use mysqli_result;
 
+//todo переимновать класс и связанные переменные
 class ConnectionProvider
 {
     private mysqli $connection;

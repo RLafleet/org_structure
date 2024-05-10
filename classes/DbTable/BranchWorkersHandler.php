@@ -5,13 +5,13 @@ require_once __DIR__ . '/../../public/vendor/autoload.php';
 
 use App\Connection\ConnectionProvider;
 
-class WorkerRequestTable
+class BranchWorkersHandler
 {
     /**
-     * @param number $id
+     * @param int $worker_id
      * @return array
      */
-    public static function GetInfoAboutWorker($id): array
+    public static function GetInfoAboutBranchesWorkers(int $worker_id): array
     {
         $connectionProvider = new ConnectionProvider();
         $sql = "
@@ -19,7 +19,7 @@ class WorkerRequestTable
                 * 
             FROM 
                 user
-            WHERE id = " . $connectionProvider->Quote($id) . "
+            WHERE branch_id = " . $connectionProvider->Quote($worker_id) . "
         ";
 
         return $connectionProvider->Fetch($sql);

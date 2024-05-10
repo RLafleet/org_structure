@@ -14,7 +14,7 @@ class BranchTable
      * @return void
      * @throws \Exception
      */
-    public static function BranchDataInsert(string $city, int $workersCount, string $address): void
+    public static function InsertBranch(string $city, int $workersCount, string $address): void
     {
         $connectionProvider = new ConnectionProvider();
         $sql = "INSERT INTO company_branch 
@@ -34,7 +34,7 @@ class BranchTable
      * @return void
      * @throws \Exception
      */
-    public static function BranchDataDelete(int $branch_id): void
+    public static function DeleteBranch(int $branch_id): void
     {
         $connectionProvider = new ConnectionProvider();
         $sql = "DELETE FROM user WHERE branch_id = '" . $connectionProvider->Quote($branch_id) . "'";
@@ -58,8 +58,9 @@ class BranchTable
      * @return void
      * @throws \Exception
      */
-    public static function BranchDataUpdate(int $id, string $city, int $workersCount, string $address): void
+    public static function UpdateBranch(int $id, string $city, int $workersCount, string $address): void
     {
+        //todo конкантенацию на интерполяцию
         $connectionProvider = new ConnectionProvider();
         $sql = "UPDATE company_branch SET 
                 workers_count = '" . $connectionProvider->Quote($workersCount) . "',
@@ -71,5 +72,27 @@ class BranchTable
         if (!$result) {
             throw new \Exception("Failed to add new branch");
         }
+    }
+
+    /**
+     * @return array
+     */
+    public static function ListBranches(): array
+    {
+        $connectionProvider = new ConnectionProvider();
+        $sql = "SELECT * FROM company_branch";
+        return $connectionProvider->Fetch($sql);
+    }
+
+    //todo бросать исключение если нет результата
+    /**
+     * @param int $id
+     * @return array
+     */
+    public static function GetBranch(int $id): array
+    {
+        $connectionProvider = new ConnectionProvider();
+        $sql = "SELECT * FROM company_branch WHERE id = '" . $connectionProvider->Quote($id) . "' ";
+        return $connectionProvider->Fetch($sql);
     }
 }
