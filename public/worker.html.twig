@@ -64,7 +64,8 @@
         <div>
             <img id="img" class="person-image" src="static/worker-img-{{ row.id }}.png" alt="worker_photo">
             <form class="person-form" enctype="multipart/form-data" method="post" action="saveWorkerImg.php?id={{ row.id }}&branch_id={{ branch_id }}">
-                <p>Загрузите ваши фотографии на сервер</p>
+                <p>Загрузите ваши фотографии на сервер. Предпочтительный формат jpg, png.</p>
+                <p>Примечание: если фотография не загрузилась, попробуйте другой формат фотографии</p>
                 <p><input id="img_loader" type="file" name="photo" multiple accept="image/*,image/jpeg">
                     <input type="submit" value="Отправить"></p>
             </form>

@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../public/vendor/autoload.php';
 
 use App\Connection\ConnectionProvider;
 
-class BranchWorkersRequestTable
+class BranchWorkers
 {
     /**
      * @param int $worker_id

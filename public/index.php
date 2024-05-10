@@ -30,5 +30,5 @@ try {
         ['rows' => $rows]
     );
 } catch (\Twig\Error\LoaderError|\Twig\Error\RuntimeError|\Twig\Error\SyntaxError $e) {
-    echo $e->getMessage();
+    echo "Error: " . $e->getMessage();
 }

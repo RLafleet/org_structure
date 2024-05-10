@@ -19,20 +19,15 @@ try {
         // Генерируем новое имя файла
         $newFileName = 'worker-img-' . $workerId . '.png';
 
-        // Перемещаем файл в папку загрузки с новым именем
         $uploadFilePath = $uploadDirectory . $newFileName;
 
-        // Преобразование изображения в формат PNG
         $image = imagecreatefromstring(file_get_contents($fileTmpPath));
         if ($image !== false) {
-            // Сохранение изображения в формате PNG
             imagepng($image, $uploadFilePath);
-            imagedestroy($image); // Освобождаем память, занятую изображением
+            imagedestroy($image);
         } else {
             throw new Exception('Ошибка при преобразовании изображения в формат PNG.');
         }
-
-        // Ваш код для сохранения пути к файлу в базе данных или как-либо еще
     } else {
         throw new Exception('Ошибка при загрузке файла.');
     }
@@ -42,4 +37,3 @@ try {
 
 header("Location: /worker.php?id=" . $workerId . "&branch_id=" . $branchId);
 exit;
-?>

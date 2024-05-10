@@ -31,9 +31,13 @@ if (!$IsElemsArrayEmpty) {
     }
 }
 
-echo $twig->render($TEMPLATE_NAME,
-    [
-        'row' => $rows[0],
-        'branch_id' => $branchId,
-    ]
-);
+try {
+    echo $twig->render($TEMPLATE_NAME,
+        [
+            'row' => $rows[0],
+            'branch_id' => $branchId,
+        ]
+    );
+} catch (\Twig\Error\LoaderError|\Twig\Error\RuntimeError|\Twig\Error\SyntaxError $e) {
+    echo "Error: " . $e->getMessage();
+}
