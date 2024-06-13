@@ -2,7 +2,6 @@
 declare(strict_types=1);
 
 namespace App\Tests\Common;
-require_once __DIR__ . '/../../public/vendor/autoload.php';
 
 use App\Connection\ConnectionProvider;
 use PHPUnit\Framework\TestCase;

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Component;
+namespace App\Tests\Component;
 require_once __DIR__ . '/../../public/vendor/autoload.php';
 
 use App\DbTable\BranchTable;
@@ -10,7 +10,7 @@ use App\DbTable\WorkerTable;
 use App\Tests\Common\AbstractDatabaseTestCase;
 
 //todo вспомогательные функции
-class ServiceTest extends AbstractDatabaseTestCase
+class BranchAndWorkerTest extends AbstractDatabaseTestCase
 {
     private function assertBranch(array $actualBranch, string $expectedCity, int $expectedWorkersCount, string $expectedAddress): void
     {
