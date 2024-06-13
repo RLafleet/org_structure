@@ -1,3 +1,3 @@
 /public/vendor/
 /composer.lock
-/classes/config/
+/src/config/

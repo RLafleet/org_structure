@@ -4,7 +4,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use App\DbTable\BranchTable;
 
-
 $city = $_POST['city'] ?? "";
 $address = $_POST['address'] ?? "";
 
