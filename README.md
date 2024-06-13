@@ -8,3 +8,4 @@
 3) Открыть в браузере http://localhost:8000
 4) Зайти в бд, если нужно.
 ``sudo mysql -u root -p org_structure``
+5) ``./public/vendor/bin/phpunit --bootstrap tests/bootstrap.php tests``
