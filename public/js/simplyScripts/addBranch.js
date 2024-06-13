@@ -25,13 +25,12 @@ export function newBranchForm(display1 = "none", display2 = "flex") {
 }
 
 export function addBranchForm() {
-    if (city.value.trim() === "" ||
-        workersCount.value.trim() === "" || address.value.trim() === "") {
+    if (city.value.trim() === "" || address.value.trim() === "") {
         alert("One or more fields are empty");
         return;
     }
 
-    requestBranchInformation(city.value, workersCount.value, address.value);
+    requestBranchInformation(city.value, address.value);
     setTimeout(function () {
         newBranchForm(DISPLAY_FLEX, DISPLAY_NONE);
     }, 300);

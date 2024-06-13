@@ -29,7 +29,7 @@ try {
         throw new Exception('Ошибка при загрузке файла.');
     }
 } catch (\Exception $e) {
-    echo "Error: " . $e->getMessage();
+    error_log($e->getMessage());
 }
 
 header("Location: /worker.php?id=" . $workerId . "&branch_id=" . $branchId);

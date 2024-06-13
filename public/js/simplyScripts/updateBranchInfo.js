@@ -11,12 +11,11 @@ const updateBranchButton = document.querySelector(UPDATE_BRANCH_BUTTON)
 const branch = document.querySelector('.content__branches-list');
 export function updateBranchForm() {
     if (city.value.trim() === ""
-        || workersCount.value.trim() === ""
         || address.value.trim() === "") {
         alert("One or more fields are empty");
         return;
     }
-    requestUpdateBranchChanges(branch.getAttribute('data-value'), city.value, workersCount.value, address.value);
+    requestUpdateBranchChanges(branch.getAttribute('data-value'), city.value, address.value);
 }
 document.addEventListener("DOMContentLoaded", function () {
     updateBranchButton.addEventListener("click", function (event) {

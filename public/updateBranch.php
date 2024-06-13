@@ -9,10 +9,9 @@ $address = $_POST['address'] ?? "";
 
 try {
     $branch_id = intval($_GET['id'] ?? "");
-    $workers_count = intval($_POST['workers_count'] ?? "");
-    BranchTable::UpdateBranch($branch_id, $city, $workers_count, $address);
+    BranchTable::updateBranch($branch_id, $city, $address);
 } catch (\Exception $e) {
-    echo "Error: " . $e->getMessage();
+    error_log($e->getMessage());
 }
 
 exit;

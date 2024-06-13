@@ -18,9 +18,9 @@ class WorkerTable
      * @return void
      * @throws \Exception
      */
-    public static function WorkerDataInsert(int $branchId, string $name, string $lastName, string $middleName, string $position): void
+    public static function insertWorker(int $branchId, string $name, string $lastName, string $middleName, string $position): void
     {
-        $connectionProvider =  new ConnectionProvider();
+        $connectionProvider = new ConnectionProvider();
         $sql = "INSERT INTO user 
             (branch_id, first_name, last_name, middle_name, phone_number, email, sex, birth_date, hiring_date, position, comment)
             VALUES ('" . $connectionProvider->Quote($branchId) . "',
@@ -39,40 +39,58 @@ class WorkerTable
         if (!$result) {
             throw new \Exception("Failed to add user for branch");
         }
+
+        $branchSql = "UPDATE company_branch SET workers_count = workers_count + 1 WHERE id = '" . $connectionProvider->Quote($branchId) . "'";
+        $branchResult = $connectionProvider->RealQuery($branchSql);
+
+        if (!$branchResult) {
+            throw new \Exception("Failed to update workers count for branch");
+        }
     }
+
+    //todo DeleteWorker
 
     /**
      * @param int $worker_id
      * @return void
      * @throws \Exception
      */
-    public static function WorkerDataDelete(int $worker_id): void
+    public static function deleteWorker(int $worker_id): void
     {
         $connectionProvider = new ConnectionProvider();
         $sql = "DELETE FROM user WHERE id='" . $connectionProvider->Quote($worker_id) . "'";
-        $deleteUser = $connectionProvider->RealQuery($sql);
-        if (!$deleteUser) {
+        $deleteWorker = $connectionProvider->RealQuery($sql);
+        if (!$deleteWorker) {
             throw new \Exception("Failed to delete users for branch");
         }
     }
 
+    //todo null вместо исключения. FindWorker
+
     /**
      * @param number $id
-     * @return array
+     * @return array|null
      */
-    public static function GetInfoAboutWorker($id): array
+    public static function findWorker($id): ?array
     {
         $connectionProvider = new ConnectionProvider();
         $sql = "
-            SELECT 
-                * 
-            FROM 
-                user
-            WHERE id = " . $connectionProvider->Quote($id) . "
-        ";
+        SELECT 
+            * 
+        FROM 
+            user
+        WHERE id = " . $connectionProvider->Quote($id) . "
+    ";
 
-        return $connectionProvider->Fetch($sql);
+        $result = $connectionProvider->Fetch($sql);
+        if (empty($result)) {
+            return null;
+        }
+
+        return $result;
     }
+
+    // todo UpdateWorker
 
     /**
      * @param int $workerId
@@ -90,18 +108,18 @@ class WorkerTable
      * @return void
      * @throws Exception
      */
-    public static function WorkerUpdateInfo(int $workerId,
-                                            int    $branchId,
-                                            string $name,
-                                            string $lastName,
-                                            string $middleName,
-                                            string $email,
-                                            string $sex,
-                                            string $birthDate,
-                                            string $hiringDate,
-                                            string $position,
-                                            string $comment,
-                                            string $phoneNumber): void
+    public static function updateWorker(int    $workerId,
+                                        int    $branchId,
+                                        string $name,
+                                        string $lastName,
+                                        string $middleName,
+                                        string $email,
+                                        string $sex,
+                                        string $birthDate,
+                                        string $hiringDate,
+                                        string $position,
+                                        string $comment,
+                                        string $phoneNumber): void
     {
         $birthDateTime = new DateTime($birthDate);
         $hiringDateTime = new DateTime($hiringDate);
@@ -109,7 +127,7 @@ class WorkerTable
         $birthDateCassandra = $birthDateTime->format('Y-m-d');
         $hiringDateCassandra = $hiringDateTime->format('Y-m-d');
 
-        $connectionProvider =  new ConnectionProvider();
+        $connectionProvider = new ConnectionProvider();
         $sql = "UPDATE user SET
                 branch_id = '" . $connectionProvider->Quote($branchId) . "',
                 first_name = '" . $connectionProvider->Quote($name) . "',

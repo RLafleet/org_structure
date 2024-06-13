@@ -10,8 +10,6 @@
     <input id="address-input" class="address" value="{{ branchInfo.address }}">
     <span class="city">City:</span>
     <input id="city-input" class="city" value="{{ branchInfo.city }}">
-    <span class="workers-count">Count of workers:</span>
-    <input id="workers-count-input" class="workers-count" value="{{ branchInfo.workers_count }}">
     <button class="update-branch" type="submit" onclick="return confirm('Are you sure you want to save new info about this branch?')">Save</button>
     <h1 class="content__branches-list" data-value="{{ branch_id }}">Branch number {{ branch_id }}, workers:</h1>
     {% for row in rows %}

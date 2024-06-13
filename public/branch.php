@@ -11,10 +11,11 @@ use App\DbTable\BranchTable;
 $twig = TwigLoader::LoadTwigStable();
 
 $TEMPLATE_NAME = "/branch.html.twig";
+$ERROR_TEMPLATE = "/error.html.twig";
 
 $branchId = intval($_GET['id'] ?? "");
-$rows = BranchWorkersHandler::GetInfoAboutBranchesWorkers($branchId);
-$branchInfo = BranchTable::GetBranch($branchId);
+$rows = BranchWorkersHandler::getBranchWorkers($branchId);
+$branchInfo = BranchTable::getBranch($branchId);
 
 $name = $_POST['name'] ?? "";
 $lastName = $_POST['lastName'] ?? "";
@@ -23,7 +24,7 @@ $position = $_POST['position'] ?? "";
 
 if (!empty($name) && !empty($lastName) && !empty($middleName) && !empty($position)) {
     try {
-        WorkerTable::WorkerDataInsert($branchId, $name, $lastName, $middleName, $position);
+        WorkerTable::insertWorker($branchId, $name, $lastName, $middleName, $position);
     } catch (\Exception $e) {
         echo "Error: " . $e->getMessage();
     }
@@ -37,5 +38,12 @@ try {
             'branchInfo' => $branchInfo[0]
         ]
     );
-} catch (\Twig\Error\LoaderError|\Twig\Error\RuntimeError|\Twig\Error\SyntaxError $e) {
+} catch (\Throwable $e) {
+    error_log($e->getMessage());
+
+    echo $twig->render($ERROR_TEMPLATE, [
+        'code' => 500,
+        'text' => "It's okay, we'll work on fixing these issues rn.",
+        'hint' => "Wait a bit"
+    ]);
 }

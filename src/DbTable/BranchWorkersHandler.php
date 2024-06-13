@@ -8,10 +8,10 @@ use App\Connection\ConnectionProvider;
 class BranchWorkersHandler
 {
     /**
-     * @param int $worker_id
+     * @param int $branch_id
      * @return array
      */
-    public static function GetInfoAboutBranchesWorkers(int $worker_id): array
+    public static function getBranchWorkers(int $branch_id): array
     {
         $connectionProvider = new ConnectionProvider();
         $sql = "
@@ -19,7 +19,7 @@ class BranchWorkersHandler
                 * 
             FROM 
                 user
-            WHERE branch_id = " . $connectionProvider->Quote($worker_id) . "
+            WHERE branch_id = " . $connectionProvider->Quote($branch_id) . "
         ";
 
         return $connectionProvider->Fetch($sql);

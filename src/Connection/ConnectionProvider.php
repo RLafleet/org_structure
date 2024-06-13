@@ -7,14 +7,20 @@ use App\config\DbConfig;
 use mysqli;
 use mysqli_result;
 
-//todo переимновать класс и связанные переменные
 class ConnectionProvider
 {
-    private mysqli $connection;
+    private static ?mysqli $connection = null;
+
+    private static function getEnv(): string
+    {
+        return getenv('APP_ENV') ?: 'production';
+    }
+
 
     public function __construct()
     {
-        $this->connection = new mysqli(DbConfig::DB_HOST, DbConfig::DB_USER, DbConfig::DB_PASS, DbConfig::DB_NAME);
+        $config = DbConfig::getConfig(self::getEnv());
+        self::$connection = new mysqli($config['DB_HOST'], $config['DB_USER'], $config['DB_PASS'], $config['DB_NAME']);
     }
 
     /**
@@ -23,7 +29,7 @@ class ConnectionProvider
      */
     public function RealQuery(string $sql): bool
     {
-        return mysqli_real_query($this->connection, $sql);
+        return mysqli_real_query(self::$connection, $sql);
     }
 
     /**
@@ -50,7 +56,7 @@ class ConnectionProvider
      */
     public function Quote(string $str): string
     {
-        return mysqli_real_escape_string($this->connection, $str);
+        return mysqli_real_escape_string(self::$connection, $str);
     }
 
     /**
@@ -59,6 +65,31 @@ class ConnectionProvider
      */
     private function Query(string $sql): mysqli_result|bool
     {
-        return mysqli_query($this->connection, $sql);
+        return mysqli_query(self::$connection, $sql);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public static function getConnection(): mysqli
+    {
+        if (self::$connection === null) {
+            $config = DbConfig::getConfig(self::getEnv());
+            self::$connection = new mysqli($config['DB_HOST'], $config['DB_USER'], $config['DB_PASS'], $config['DB_NAME']);
+
+            if (self::$connection->connect_error) {
+                throw new \Exception('Connection failed: ' . self::$connection->connect_error);
+            }
+        }
+
+        return self::$connection;
+    }
+
+    public static function closeConnection(): void
+    {
+        if (self::$connection !== null) {
+            self::$connection->close();
+            self::$connection = null;
+        }
     }
 }

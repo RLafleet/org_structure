@@ -7,7 +7,7 @@ use App\DbTable\WorkerTable;
 try {
     $worker_id = intval($_POST['worker_id'] ?? "");
     $branch_id = intval($_GET['branch_id'] ?? "");
-    WorkerTable::WorkerDataDelete($worker_id);
+    WorkerTable::deleteWorker($worker_id);
 } catch (\Exception $e) {
     echo "Error: " . $e->getMessage();
 }

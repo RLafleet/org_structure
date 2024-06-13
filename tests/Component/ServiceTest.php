@@ -2,138 +2,129 @@
 declare(strict_types=1);
 
 namespace Component;
+require_once __DIR__ . '/../../public/vendor/autoload.php';
 
 use App\DbTable\BranchTable;
-use App\Loader\TwigLoader;
-use App\DbTable\WorkerTable;
 use App\DbTable\BranchWorkersHandler;
-use App\Util\PostParameterHandler;
+use App\DbTable\WorkerTable;
+use App\Tests\Common\AbstractDatabaseTestCase;
 
-class ArticleServiceTest extends AbstractDatabaseTestCase
+//todo вспомогательные функции
+class ServiceTest extends AbstractDatabaseTestCase
 {
-    public function testCreateEditAndDeleteArticle(): void
+    private function assertBranch(array $actualBranch, string $expectedCity, int $expectedWorkersCount, string $expectedAddress): void
     {
-        // Шаг 1. Arrange
-        // В данном случае мы только создаём сервис
-        $service = $this->createArticleService();
-        $firstAuthorId = 10;
-
-        // Шаг 2. Act
-        $articleId = $service->createArticle(new CreateArticleParams(
-            userId: $firstAuthorId,
-            title: '(Черновик) B+ деревья',
-            tags: ['MySQL', 'PostgreSQL'],
-        ));
-
-        // Шаг 3. Assert
-        $article = $service->getArticle($articleId);
-        $this->assertEquals('(Черновик) B+ деревья', $article->getTitle());
-        $this->assertArticleTags(['MySQL', 'PostgreSQL'], $article);
-        $this->assertEquals($firstAuthorId, $article->getCreatedBy());
-
-        // Шаг 1. Arrange
-        $secondAuthorId = 17;
-
-        // Шаг 2. Act
-        $service->editArticle(new EditArticleParams(
-            id: $articleId,
-            userId: $secondAuthorId,
-            title: 'B+ деревья',
-            content: <<<TEXT
-                    B+-деревья — это основа физической структуры реляционных баз данных.
-                    
-                    Именно они ответственны за сочетание двух характеристик реляционных СУБД:
-                    
-                    - Высокая скорость работы как для небольших запросов, так и для больших 
-                    - Устойчивость данных к перезагрузке при условии сохранности внешнего диска
-                    TEXT,
-            tags: ['MySQL', 'B+-деревья', 'Индексы'],
-        ));
-
-        // Шаг 3. Assert
-        $article = $service->getArticle($articleId);
-        $this->assertEquals('B+ деревья', $article->getTitle());
-        $this->assertArticleTags(['MySQL', 'B+-деревья', 'Индексы'], $article);
-        $this->assertEquals($firstAuthorId, $article->getCreatedBy());
-        $this->assertEquals($secondAuthorId, $article->getUpdatedBy());
-
-        // Шаг 2. Act
-        $service->deleteArticle($articleId);
-
-        // Шаг 3. Assert
-        $this->expectException(ArticleNotFoundException::class);
-        $service->getArticle($articleId);
+        $this->assertEquals($expectedCity, $actualBranch['city']);
+        $this->assertEquals($expectedWorkersCount, $actualBranch['workers_count']);
+        $this->assertEquals($expectedAddress, $actualBranch['address']);
     }
 
-    public function testBatchDeleteArticles(): void
+    private function assertWorker(array $actualWorker, array $expectedData): void
     {
-        // Шаг 1. Arrange
-        // В данном случае мы только создаём сервис
-        $service = $this->createArticleService();
-        $authorId = 10;
-
-        // Шаг 2. Act
-        $firstArticleId = $service->createArticle(new CreateArticleParams(
-            userId: $authorId,
-            title: 'B+ деревья',
-            tags: ['MySQL', 'PostgreSQL'],
-        ));
-        $secondArticleId = $service->createArticle(new CreateArticleParams(
-            userId: $authorId,
-            title: 'Индексы',
-            tags: ['MySQL', 'PostgreSQL', 'SQL'],
-        ));
-        $thirdArticleId = $service->createArticle(new CreateArticleParams(
-            userId: $authorId,
-            title: 'План выполнения запроса',
-            tags: ['MySQL', 'EXPLAIN', 'SQL'],
-        ));
-        $service->batchDeleteArticles([$firstArticleId, $secondArticleId]);
-
-        // Шаг 3. Assert
-        $article = $service->getArticle($thirdArticleId);
-        $this->assertEquals('План выполнения запроса', $article->getTitle());
-        $this->assertArticleTags(['MySQL', 'EXPLAIN', 'SQL'], $article);
-
-        $this->assertThrows(
-            static fn() => $service->getArticle($firstArticleId),
-            ArticleNotFoundException::class
-        );
-        $this->assertThrows(
-            static fn() => $service->getArticle($secondArticleId),
-            ArticleNotFoundException::class
-        );
-    }
-
-    private function assertThrows(\Closure $closure, string $exceptionClass): void
-    {
-        $actualExceptionClass = null;
-        try
-        {
-            $closure();
+        foreach ($expectedData as $key => $value) {
+            $this->assertEquals($value, $actualWorker[$key]);
         }
-        catch (\Throwable $e)
-        {
-            $actualExceptionClass = $e::class;
-        }
-        $this->assertEquals($exceptionClass, $actualExceptionClass, "$exceptionClass exception should be thrown");
     }
 
-    private function assertArticleTags(array $expected, Article $article): void
+    /**
+     * @throws \Exception
+     */
+    public function testCreateEditAndDeleteBranch(): void
     {
-        $actual = $article->getTags();
-        sort($expected);
-        sort($actual);
-        $this->assertEquals($expected, $actual, 'article tags');
+        $city = "TestCity";
+        $workersCount = 0;
+        $address = "Test Address";
+
+        BranchTable::insertBranch($city, $address);
+        $branches = BranchTable::listBranches();
+        //todo убрать end и смотреть по индексу
+        $createdBranch = $branches[0];
+
+        $this->assertNotEmpty($createdBranch);
+        $this->assertBranch($createdBranch, $city, $workersCount, $address);
+
+        $newCity = "UpdatedCity";
+        $newWorkersCount = 0;
+        $newAddress = "Updated Address";
+        BranchTable::updateBranch((int)$createdBranch['id'], $newCity, $newAddress);
+        $updatedBranch = BranchTable::getBranch((int)$createdBranch['id'])[0];
+
+        $this->assertBranch($updatedBranch, $newCity, $newWorkersCount, $newAddress);
+
+        BranchTable::deleteBranch((int)$createdBranch['id']);
+
+        $deletedBranch = BranchTable::getBranch((int)$createdBranch['id']);
+        $this->assertNull($deletedBranch);
     }
 
-    private function createArticleService(): ArticleService
+    /**
+     * @throws \Exception
+     */
+    public function testAddEditAndDeleteWorker(): void
     {
-        $connection = $this->getConnection();
-        return new ArticleService(
-            new TransactionalExecutor($connection),
-            new ArticleRepository($connection),
-            new TagRepository($connection)
+        $city = "WorkerCity";
+        $address = "Worker Address";
+        BranchTable::insertBranch($city, $address);
+        $branches = BranchTable::listBranches();
+        $createdBranch = $branches[0];
+
+        $branchId = (int)$createdBranch['id'];
+        $name = "John";
+        $lastName = "Doe";
+        $middleName = "M.";
+        $position = "Developer";
+
+        WorkerTable::insertWorker($branchId, $name, $lastName, $middleName, $position);
+        $workers = BranchWorkersHandler::getBranchWorkers($branchId);
+        $createdWorker = $workers[0];
+
+        $this->assertNotEmpty($createdWorker);
+        $this->assertWorker($createdWorker, [
+            'first_name' => $name,
+            'last_name' => $lastName,
+            'middle_name' => $middleName,
+            'position' => $position
+        ]);
+
+        $newData = [
+            'first_name' => "Jane",
+            'last_name' => "Smith",
+            'middle_name' => "A.",
+            'email' => "jane.smith@example.com",
+            'sex' => "female",
+            'birth_date' => "1990-01-01",
+            'hiring_date' => "2020-01-01",
+            'position' => "Manager",
+            'comment' => "Updated comment",
+            'phone_number' => "1234567890"
+        ];
+
+        WorkerTable::updateWorker(
+            (int)$createdWorker['id'],
+            $branchId,
+            $newData['first_name'],
+            $newData['last_name'],
+            $newData['middle_name'],
+            $newData['email'],
+            $newData['sex'],
+            $newData['birth_date'],
+            $newData['hiring_date'],
+            $newData['position'],
+            $newData['comment'],
+            $newData['phone_number']
         );
+
+        $updatedWorker = WorkerTable::findWorker((int)$createdWorker['id'])[0];
+        $this->assertWorker($updatedWorker, $newData);
+
+        WorkerTable::deleteWorker((int)$createdWorker['id']);
+
+        $deletedWorker = WorkerTable::findWorker((int)$createdWorker['id']);
+        $this->assertNull($deletedWorker);
+
+        BranchTable::deleteBranch($branchId);
+
+        $deletedBranch = BranchTable::getBranch((int)$createdBranch['id']);
+        $this->assertNull($deletedBranch);
     }
 }
