@@ -15,7 +15,7 @@ $ERROR_TEMPLATE = "/error.html.twig";
 
 $branchId = intval($_GET['id'] ?? "");
 $rows = BranchWorkersHandler::getBranchWorkers($branchId);
-$branchInfo = BranchTable::getBranch($branchId);
+$branchInfo = BranchTable::findBranch($branchId);
 
 $name = $_POST['name'] ?? "";
 $lastName = $_POST['lastName'] ?? "";

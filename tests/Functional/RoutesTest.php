@@ -13,6 +13,7 @@ class RoutesTest extends AbstractFunctionalTestCase
             $response->getBody()->write("Hello, world!");
             return $response;
         });
+        //todo вызывать прям метод, а не устанавливать роут
 
         $this->app->post('/test', function ($request, $response, $args) {
             $data = $request->getParsedBody();

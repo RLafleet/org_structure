@@ -87,7 +87,7 @@ class BranchTable
      * @param int $id
      * @return array|null
      */
-    public static function getBranch(int $id): ?array
+    public static function findBranch(int $id): ?array
     {
         $connectionProvider = new ConnectionProvider();
         $sql = "SELECT * FROM company_branch WHERE id = '" . $connectionProvider->Quote($id) . "' ";
