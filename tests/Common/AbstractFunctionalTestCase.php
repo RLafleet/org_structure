@@ -30,44 +30,23 @@ abstract class AbstractFunctionalTestCase extends AbstractDatabaseTestCase
 
     abstract protected function setupTestRoutes(): void;
 
-    /**
-     * @param string $urlPath
-     * @param array $queryParams
-     * @return ResponseInterface
-     */
     protected function sendGetRequest(string $urlPath, array $queryParams = []): ResponseInterface
     {
         $urlString = $urlPath . '?' . http_build_query($queryParams);
         return $this->sendRequest('GET', $urlString);
     }
 
-    /**
-     * @param string $urlPath
-     * @param array $requestParams
-     * @return ResponseInterface
-     */
     protected function sendPostRequest(string $urlPath, array $requestParams = []): ResponseInterface
     {
         return $this->sendRequest('POST', $urlPath, $requestParams);
     }
 
-    /**
-     * @param string $urlPath
-     * @param array $queryParams
-     * @return ResponseInterface
-     */
     protected function sendDeleteRequest(string $urlPath, array $queryParams = []): ResponseInterface
     {
         $urlString = $urlPath . '?' . http_build_query($queryParams);
         return $this->sendRequest('DELETE', $urlString);
     }
 
-    /**
-     * @param string $method
-     * @param string $url
-     * @param array $body
-     * @return ResponseInterface
-     */
     private function sendRequest(string $method, string $url, array $body = []): ResponseInterface
     {
         $uri = $this->uriFactory->createUri($url);
@@ -78,5 +57,24 @@ abstract class AbstractFunctionalTestCase extends AbstractDatabaseTestCase
         }
 
         return $this->app->handle($request);
+    }
+
+    protected function assertStatusCode(int $statusCode, ResponseInterface $response): void
+    {
+        $this->assertEquals($statusCode, $response->getStatusCode(), "status code must be $statusCode");
+    }
+
+    protected function parseResponseBodyAsJson(ResponseInterface $response): array
+    {
+        $response->getBody()->seek(0);
+        $responseBytes = $response->getBody()->getContents();
+        try
+        {
+            return json_decode($responseBytes, associative: true, flags: JSON_THROW_ON_ERROR);
+        }
+        catch (\JsonException $e)
+        {
+            throw new \RuntimeException("Invalid response body: {$e->getMessage()}", 0, $e);
+        }
     }
 }
