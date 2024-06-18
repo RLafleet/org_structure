@@ -17,6 +17,10 @@ class BranchTable
      */
     public static function insertBranch(string $city, string $address): void
     {
+        if (empty($city) || empty($address)) {
+            throw new \InvalidArgumentException("Invalid input data");
+        }
+
         $connectionProvider = new ConnectionProvider();
         $sql = "INSERT INTO company_branch 
             (city, workers_count, address)

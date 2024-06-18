@@ -20,6 +20,10 @@ class WorkerTable
      */
     public static function insertWorker(int $branchId, string $name, string $lastName, string $middleName, string $position): void
     {
+        if (empty($name) || empty($lastName) || empty($middleName) || empty($position)) {
+            throw new \InvalidArgumentException("Invalid input data");
+        }
+
         $connectionProvider = new ConnectionProvider();
         $sql = "INSERT INTO user 
             (branch_id, first_name, last_name, middle_name, phone_number, email, sex, birth_date, hiring_date, position, comment)
@@ -58,10 +62,31 @@ class WorkerTable
     public static function deleteWorker(int $worker_id): void
     {
         $connectionProvider = new ConnectionProvider();
-        $sql = "DELETE FROM user WHERE id='" . $connectionProvider->Quote($worker_id) . "'";
-        $deleteWorker = $connectionProvider->RealQuery($sql);
-        if (!$deleteWorker) {
-            throw new \Exception("Failed to delete users for branch");
+
+        $sql = "SELECT branch_id FROM user WHERE id='" . $connectionProvider->Quote($worker_id) . "'";
+        $result = $connectionProvider->Fetch($sql);
+
+        if (empty($result)) {
+            throw new \Exception("Worker not found");
+        }
+
+        $branchId = $result[0]['branch_id'];
+
+        if ($branchId !== null) {
+            $sql = "DELETE FROM user WHERE id='" . $connectionProvider->Quote($worker_id) . "'";
+            $deleteWorker = $connectionProvider->RealQuery($sql);
+            if (!$deleteWorker) {
+                throw new \Exception("Failed to delete user");
+            }
+
+            $branchSql = "UPDATE company_branch SET workers_count = workers_count - 1 WHERE id = '" . $connectionProvider->Quote($branchId) . "'";
+            $branchResult = $connectionProvider->RealQuery($branchSql);
+
+            if (!$branchResult) {
+                throw new \Exception("Failed to update workers count for branch");
+            }
+        } else {
+            throw new \Exception("Branch ID is null");
         }
     }
 
@@ -121,6 +146,10 @@ class WorkerTable
                                         string $comment,
                                         string $phoneNumber): void
     {
+        if (empty($name) || empty($lastName) || empty($middleName) || empty($email) || empty($sex) || empty($birthDate) || empty($comment) || empty($phoneNumber) || empty($hiringDate) || empty($position)) {
+            throw new \InvalidArgumentException("Invalid input data");
+        }
+
         $birthDateTime = new DateTime($birthDate);
         $hiringDateTime = new DateTime($hiringDate);
 

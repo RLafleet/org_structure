@@ -59,8 +59,10 @@ class BranchAndWorkerTest extends AbstractDatabaseTestCase
         BranchTable::insertBranch("Калининград", "улица Волкова, 101");
         $branches = BranchTable::listBranches();
         $createdBranch = $branches[0];
-
         $branchId = (int)$createdBranch['id'];
+
+        $this->assertBranch($createdBranch, "Калининград", "улица Волкова, 101");
+
         WorkerTable::insertWorker($branchId, "Коля", "Богатов", "Ж.", "Разработчик");
 
         $workers = BranchWorkersHandler::getBranchWorkers($branchId);
@@ -68,6 +70,8 @@ class BranchAndWorkerTest extends AbstractDatabaseTestCase
 
         $this->assertNotEmpty($createdWorker);
         $this->assertWorker($createdWorker, "Коля", "Богатов", "Ж.", "Разработчик", "Please, add email");
+
+        $this->assertBranch(BranchTable::findBranch($branchId)[0], "Калининград", "улица Волкова, 101", 1);
 
         WorkerTable::updateWorker(
             (int)$createdWorker['id'],
@@ -103,6 +107,8 @@ class BranchAndWorkerTest extends AbstractDatabaseTestCase
         $deletedWorker = WorkerTable::findWorker((int)$createdWorker['id']);
         $this->assertNull($deletedWorker);
 
+        $this->assertBranch(BranchTable::findBranch($branchId)[0], "Калининград", "улица Волкова, 101");
+
         BranchTable::deleteBranch((int)$createdBranch['id']);
 
         $deletedBranch = BranchTable::findBranch((int)$createdBranch['id']);
@@ -121,5 +127,78 @@ class BranchAndWorkerTest extends AbstractDatabaseTestCase
         $this->assertEquals($hiringDate, $actualWorker['hiring_date']);
         $this->assertEquals($comment, $actualWorker['comment']);
         $this->assertEquals($phoneNumber, $actualWorker['phone_number']);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testAddWorkerWithInvalidData(): void
+    {
+        BranchTable::insertBranch("Калининград", "улица Волкова, 101");
+        $branches = BranchTable::listBranches();
+        $createdBranch = $branches[0];
+        $branchId = (int)$createdBranch['id'];
+
+        try {
+            WorkerTable::insertWorker($branchId, "", "Богатов", "Ж.", "Разработчик");
+            $this->fail("Invalid input data");
+        } catch (\Exception $e) {
+            $this->assertStringContainsString('Invalid input data', $e->getMessage());
+        }
+
+        WorkerTable::insertWorker($branchId, "Коля", "Богатов", "Ж.", "Разработчик");
+
+        $workers = BranchWorkersHandler::getBranchWorkers($branchId);
+        $this->assertCount(1, $workers);
+
+        BranchTable::deleteBranch((int)$createdBranch['id']);
+        $deletedBranch = BranchTable::findBranch((int)$createdBranch['id']);
+        $this->assertNull($deletedBranch);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testUpdateWorkerWithInvalidData(): void
+    {
+        BranchTable::insertBranch("Калининград", "улица Волкова, 101");
+        $branches = BranchTable::listBranches();
+        $createdBranch = $branches[0];
+        $branchId = (int)$createdBranch['id'];
+
+        WorkerTable::insertWorker($branchId, "Коля", "Богатов", "Ж.", "Разработчик");
+        $workers = BranchWorkersHandler::getBranchWorkers($branchId);
+        $createdWorker = $workers[0];
+
+        try {
+            WorkerTable::updateWorker(
+                (int)$createdWorker['id'],
+                $branchId,
+                "Коля",
+                "",
+                "Ж.",
+                "kolya.bogatoviy@mail.ru",
+                "male",
+                "2000-01-01",
+                "2023-01-01",
+                "Senior Developer",
+                "Updated comment",
+                "123-456-7890"
+            );
+            $this->fail("Invalid input data");
+        } catch (\Exception $e) {
+            $this->assertStringContainsString('Invalid input data', $e->getMessage());
+        }
+
+        $unchangedWorker = WorkerTable::findWorker((int)$createdWorker['id'])[0];
+        $this->assertWorker($unchangedWorker, "Коля", "Богатов", "Ж.", "Разработчик", "Please, add email");
+
+        WorkerTable::deleteWorker((int)$createdWorker['id']);
+        $deletedWorker = WorkerTable::findWorker((int)$createdWorker['id']);
+        $this->assertNull($deletedWorker);
+
+        BranchTable::deleteBranch((int)$createdBranch['id']);
+        $deletedBranch = BranchTable::findBranch((int)$createdBranch['id']);
+        $this->assertNull($deletedBranch);
     }
 }
