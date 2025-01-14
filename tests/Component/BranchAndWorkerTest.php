@@ -17,8 +17,8 @@ use App\Tests\Common\AbstractDatabaseTestCase;
 // [+] todo именованные параметры
 // [+] todo проверять количество сотрудников
 // [+] todo конкретные assert
-// [-] todo описать негативный в тест-плане
-// [-] todo негативный тест с injection
+// [+] todo описать негативный в тест-плане
+// [+] todo негативный тест с injection
 class BranchAndWorkerTest extends AbstractDatabaseTestCase
 {
     /**
@@ -133,15 +133,15 @@ class BranchAndWorkerTest extends AbstractDatabaseTestCase
     /**
      * @throws \Exception
      */
-    public function testAddWorkerWithInvalidData(): void
+    public function testSqlInjectionAndAddWorkerWithInvalidData(): void
     {
-        BranchTable::insertBranch("; DROP TABLE company_branch; -- Калининград ; DROP TABLE company_branch; --", "; DROP TABLE user; --");
+        BranchTable::insertBranch("'; DROP TABLE company_branch; -- Калининград ; DROP TABLE company_branch; --", "; DROP TABLE user; --");
         $branches = BranchTable::listBranches();
         $this->assertCount(1, $branches);
         $createdBranch = $branches[0];
 
         $this->assertNotEmpty($createdBranch);
-        $this->assertBranch($createdBranch, "; DROP TABLE company_branch; -- Калининград ; DROP TABLE company_branch; --", "; DROP TABLE user; --");
+        $this->assertBranch($createdBranch, "'; DROP TABLE company_branch; -- Калининград ; DROP TABLE company_branch; --", "; DROP TABLE user; --");
         $branchId = (int)$createdBranch['id'];
 
         try {
@@ -155,31 +155,6 @@ class BranchAndWorkerTest extends AbstractDatabaseTestCase
         $this->assertCount(0, $workers);
 
         //Cleanup
-        BranchTable::deleteBranch((int)$createdBranch['id']);
-    }
-
-    /**
-     * @throws \Exception
-     */
-    public function testSqlInjectionAttempt(): void
-    {
-        BranchTable::insertBranch("Калининград", "улица Волкова, 101");
-        $branches = BranchTable::listBranches();
-        $createdBranch = $branches[0];
-        $branchId = (int)$createdBranch['id'];
-
-        WorkerTable::insertWorker(
-            $branchId,
-            "Коля'; DROP TABLE user; --",
-            "Богатов",
-            "Ж.",
-            "Разработчик"
-        );
-
-        $workers = BranchWorkersHandler::getBranchWorkers($branchId);
-        $this->assertCount(1, $workers);
-
-        // Cleanup
         BranchTable::deleteBranch((int)$createdBranch['id']);
     }
 }
