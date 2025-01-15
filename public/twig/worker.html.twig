@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="eng">
 <head>
-    <link rel="stylesheet" type="text/css" href="css/worker.html.css">
+    <link rel="stylesheet" type="text/css" href="../css/worker.html.css">
     <title>Worker</title>
 </head>
 <div class="worker-container">
     <div style="display: flex; flex-direction: row">
-        <a href="index.php" style="font-size: 30px;">Branches/</a>
-        <a href="branch.php?id={{ branch_id }}" style="font-size: 30px;">Workers</a>
+        <a href="../index.php" style="font-size: 30px;">Branches/</a>
+        <a href="../branch.php?id={{ branch_id }}" style="font-size: 30px;">Workers</a>
     </div>
     <div style="display: none" id="worker" data-value="{{ row.id }}"></div>
     <div style="display: none" id="branch" data-value="{{ branch_id }}"></div>
@@ -63,7 +63,7 @@
         </ul>
         <div>
             <img id="img" class="person-image" src="static/worker-img-{{ row.id }}.png" alt="worker_photo">
-            <form class="person-form" enctype="multipart/form-data" method="post" action="saveWorkerImg.php?id={{ row.id }}&branch_id={{ branch_id }}">
+            <form class="person-form" enctype="multipart/form-data" method="post" action="../saveWorkerImg.php?id={{ row.id }}&branch_id={{ branch_id }}">
                 <p>Загрузите ваши фотографии на сервер. Предпочтительный формат jpg, png.</p>
                 <p>Примечание: если фотография не загрузилась, попробуйте другой формат фотографии</p>
                 <p><input id="img_loader" type="file" name="photo" multiple accept="image/*,image/jpeg">
@@ -82,4 +82,4 @@
         reader.readAsDataURL(event.target.files[0]);
     };
 </script>
-<script type="module" src="js/simplyScripts/updateWorkerInfo.js"></script>
+<script type="module" src="../js/simplyScripts/updateWorkerInfo.js"></script>

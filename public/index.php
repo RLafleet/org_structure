@@ -6,8 +6,8 @@ require_once __DIR__ . '/vendor/autoload.php';
 use App\DbTable\BranchTable;
 use App\Loader\TwigLoader;
 
-$TEMPLATE_NAME = "/index.html.twig";
-$ERROR_TEMPLATE = "/error.html.twig";
+$TEMPLATE_NAME = "/twig/index.html.twig";
+$ERROR_TEMPLATE = "/twig/error.html.twig";
 
 ini_set('log_errors', '1');
 ini_set('error_log', __DIR__ . '/logs/app.log');

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="eng">
 <head>
-    <link rel="stylesheet" type="text/css" href="css/branch.html.css">
+    <link rel="stylesheet" type="text/css" href="../css/branch.html.css">
     <title>Worker</title>
 </head>
 <div class="">
-    <a href="index.php" style="font-size: 30px;">Branches/</a>
+    <a href="../index.php" style="font-size: 30px;">Branches/</a>
     <span class="address">Address:</span>
     <input id="address-input" class="address" value="{{ branchInfo.address }}">
     <span class="city">City:</span>
@@ -16,9 +16,9 @@
         <div class="work-page__branches" id="branches">
             <div class="work-item">
                 <div class="branch-name">{{ loop.index }}</div>
-                <a class="worker-full-name" href="worker.php?id={{ row.id|trim }}&branch_id={{ branch_id }}">Full name: {{ row.first_name }} {{ row.last_name }} {{ row.middle_name }}</a>
+                <a class="worker-full-name" href="../worker.php?id={{ row.id|trim }}&branch_id={{ branch_id }}">Full name: {{ row.first_name }} {{ row.last_name }} {{ row.middle_name }}</a>
                 <div class="worker-position">Position: {{ row.position }}</div>
-                <form method="post" action="deleteWorker.php?branch_id={{ branch_id }}">
+                <form method="post" action="../deleteWorker.php?branch_id={{ branch_id }}">
                     <input type="hidden" name="worker_id" value="{{ row.id|trim }}">
                     <button type="submit" onclick="return confirm('Are you sure you want to delete this worker?')">Delete</button>
                 </form>
@@ -52,5 +52,5 @@
 </div>
 </html>
 
-<script type="module" src="js/simplyScripts/addWorker.js"></script>
-<script type="module" src="js/simplyScripts/updateBranchInfo.js"></script>
+<script type="module" src="../js/simplyScripts/addWorker.js"></script>
+<script type="module" src="../js/simplyScripts/updateBranchInfo.js"></script>

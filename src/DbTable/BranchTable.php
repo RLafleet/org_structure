@@ -22,17 +22,31 @@ class BranchTable
         }
 
         $connectionProvider = new ConnectionProvider();
+        $defaultWorkersCount = 0;
+        $defaultCompanyId = null;
+        $defaultBranchDescription = null;
+
+        error_log("------------------------                    new error log                       -----------");
+        error_log($address);
         $sql = "INSERT INTO company_branch 
-            (city, workers_count, address)
-            VALUES ('" . $connectionProvider->Quote($city) . "',
-                    '" . $connectionProvider->Quote(DEFAULT_VALUE) . "',
-                    '" . $connectionProvider->Quote($address) . "')";
+        (company_id, workers_count, city, address, branch_description)
+        VALUES (
+            " . ($defaultCompanyId !== null ? "NULL" : "NULL") . ",
+            " . $defaultWorkersCount . ",
+            '" . $connectionProvider->Quote($city) . "',
+            '" . $connectionProvider->Quote($address) . "',
+            " . ($defaultBranchDescription !== null ? "NULL" : "NULL") . "
+        )";
+
         $result = $connectionProvider->RealQuery($sql);
 
+        error_log("------------------------                    new error log                       -----------");
+        error_log($result);
         if (!$result) {
             throw new \Exception("Failed to add new branch");
         }
     }
+
 
     // todo термин user на worker
     /**
