@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../public/vendor/autoload.php';
 use App\connection\ConnectionProvider;
 use Exception;
 
-class DepartmentTable
+class BranchDepartment
 {
     /**
      * @param int $branchId

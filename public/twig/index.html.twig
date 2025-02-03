@@ -16,7 +16,7 @@
         <div class="work-page__branches">
             <div class="work-item">
                 <div id="branch-id" style="visibility: hidden">{{ row.id }}</div>
-                <a href="../branch.php?id={{ row.id|trim }}" class="work-id">{{ loop.index }}</a>
+                <a href="../branchDepartment.php?id={{ row.id|trim }}" class="work-id">{{ loop.index }}</a>
                 <div class="branch-container">
                     <span class="address">Address: {{ row.address }}</span>
                     <span class="city">City: {{ row.city }}</span>
@@ -54,5 +54,5 @@
 </body>
 </html>
 
-<script type="module" src="/js/simplyScripts/addBranch.js"></script>
+<script type="module" src="../js/simplyScripts/addBranch.js"></script>
 

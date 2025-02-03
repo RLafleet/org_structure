@@ -2,10 +2,8 @@
 declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
 
-use App\DbTable\BranchWorkersHandler;
-use App\DbTable\WorkerTable;
+use App\DbTable\{BranchDepartment, BranchDepartmentHandler};
 use App\Loader\TwigLoader;
-use App\DbTable\BranchTable;
 
 
 $twig = TwigLoader::LoadTwigStable();
@@ -14,17 +12,16 @@ $TEMPLATE_NAME = "/twig/branch.html.twig";
 $ERROR_TEMPLATE = "/twig/error.html.twig";
 
 $branchId = intval($_GET['id'] ?? "");
-$rows = BranchWorkersHandler::getBranchWorkers($branchId);
-$branchInfo = BranchTable::findBranch($branchId);
+$rows = BranchDepartmentHandler::getBranchDepartments($branchId);
+$departmentsInfo = BranchDepartment::findDepartment($branchId);
 
-$name = $_POST['name'] ?? "";
-$lastName = $_POST['lastName'] ?? "";
-$middleName = $_POST['middleName'] ?? "";
-$position = $_POST['position'] ?? "";
+$departmentName = $_POST['department_name'] ?? "";
+error_log("__---------__", $departmentName);
 
-if (!empty($name) && !empty($lastName) && !empty($middleName) && !empty($position)) {
+if (!empty($departmentName)) {
+    error_log("__---------__", $departmentName);
     try {
-        WorkerTable::insertWorker($branchId, $name, $lastName, $middleName, $position);
+        BranchDepartment::insertDepartment($branchId, $departmentName);
     } catch (\Exception $e) {
         echo "Error: " . $e->getMessage();
     }
@@ -35,7 +32,7 @@ try {
         [
             'branch_id' => $branchId,
             'rows' => $rows,
-            'branchInfo' => $branchInfo[0]
+            '$departmentsInfo' => $departmentsInfo[0],
         ]
     );
 } catch (\Throwable $e) {

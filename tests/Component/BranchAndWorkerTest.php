@@ -6,7 +6,7 @@ namespace App\Tests\Component;
 require_once __DIR__ . '/../../public/vendor/autoload.php';
 
 use App\DbTable\BranchTable;
-use App\DbTable\BranchWorkersHandler;
+use App\DbTable\BranchDepartmentHandler;
 use App\DbTable\WorkerTable;
 use App\Tests\Common\AbstractDatabaseTestCase;
 
@@ -66,7 +66,7 @@ class BranchAndWorkerTest extends AbstractDatabaseTestCase
 
         WorkerTable::insertWorker($branchId, "Коля", "Богатов", "Ж.", "Разработчик");
 
-        $workers = BranchWorkersHandler::getBranchWorkers($branchId);
+        $workers = BranchDepartmentHandler::getBranchWorkers($branchId);
         $createdWorker = $workers[0];
 
         $this->assertNotEmpty($createdWorker);
@@ -151,7 +151,7 @@ class BranchAndWorkerTest extends AbstractDatabaseTestCase
             $this->assertEquals('Invalid input data', $e->getMessage());
         }
 
-        $workers = BranchWorkersHandler::getBranchWorkers($branchId);
+        $workers = BranchDepartmentHandler::getBranchWorkers($branchId);
         $this->assertCount(0, $workers);
 
         //Cleanup
