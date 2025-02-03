@@ -1,83 +1,201 @@
-.work-page {
-    width: 100%;
-    height: 100%;
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    line-height: 1.6;
 }
 
-.content__branches-list {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.work-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+form {
+    margin: 0;
+    padding: 0;
+}
+
+h1.content__branches-list {
+    text-align: center;
+    font-size: 2rem;
+    color: #444;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.work-page__branches {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    padding: 15px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.work-page__branches:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .work-item {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 10px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-.branch-container
-{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .work-id {
+    font-size: 1.2rem;
     font-weight: bold;
-}
-
-.branch-name {
-    width: 300px;
-    margin-left: 20px;
-    font-size: 24px;
     color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s;
 }
 
-.city {
-    font-size: 24px;
-    font-style: italic;
+.work-id:hover {
+    color: #0056b3;
 }
 
-.address {
-    font-size: 24px;
+.branch-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    align-items: center;
+    padding-top: 10px;
 }
 
-.workers-count {
-    font-size: 24px;
+.branch-container span {
+    display: block;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.branch-container form {
+    margin: 0;
+}
+
+.branch-container button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.branch-container button:hover {
+    background-color: #c0392b;
+}
+
+.logout-button button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button button:hover {
+    background-color: #c0392b;
 }
 
 .work-page__new-branch {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+    text-align: center;
+    margin-top: 30px;
 }
 
 .new-branch__title {
-    width: 100%;
-    font-size: 20px;
-    padding: 20px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.new-branch__title:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
 }
 
 .work-page__add-branch {
     display: none;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    width: 97%;
-    margin: auto;
-    padding: 15px 0;
-    border: dashed gray;
+    gap: 15px;
+    padding: 20px;
+    background: #f3f3f3;
+    border: 2px dashed #007bff;
+    border-radius: 8px;
+    margin-top: 20px;
 }
 
 .add-branch__label {
-    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.add-branch__label input,
+.add-branch__label textarea {
+    width: 100%;
+    max-width: 500px;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.add-branch__label input:focus,
+.add-branch__label textarea:focus {
+    border-color: #007bff;
+    outline: none;
 }
 
 .add-branch__button {
-    padding: 5px 10px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.add-branch__button:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+button:focus {
+    outline: none;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .branch-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .add-branch__label input,
+    .add-branch__label textarea {
+        max-width: 100%;
+    }
 }

@@ -6,6 +6,7 @@ const ADD_BRANCH_BUTTON = ".add-branch__button";
 const LABEL_BRANCH_CITY = ".label__branch-city";
 const LABEL_BRANCH_WORKERS_COUNT = ".label__branch-workers-count";
 const LABEL_BRANCH_ADDRESS = ".label__branch-address";
+const LABEL_BRANCH_DESCRIPTION = ".label__branch-description";
 const DISPLAY_NONE = "none";
 const DISPLAY_FLEX = "flex";
 
@@ -18,6 +19,7 @@ const addBranchButton = document.querySelector(ADD_BRANCH_BUTTON);
 const city = document.querySelector(LABEL_BRANCH_CITY);
 const workersCount = document.querySelector(LABEL_BRANCH_WORKERS_COUNT);
 const address = document.querySelector(LABEL_BRANCH_ADDRESS);
+const description = document.querySelector(LABEL_BRANCH_DESCRIPTION);
 
 export function newBranchForm(display1 = "none", display2 = "flex") {
     newBranch.style.display = display1;
@@ -29,8 +31,8 @@ export function addBranchForm() {
         alert("One or more fields are empty");
         return;
     }
-
-    requestBranchInformation(city.value, address.value);
+    console.log(description.value);
+    requestBranchInformation(city.value, address.value, description.value);
     setTimeout(function () {
         newBranchForm(DISPLAY_FLEX, DISPLAY_NONE);
     }, 300);

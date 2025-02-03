@@ -14,36 +14,64 @@ class WorkerTable
      * @param string $name
      * @param string $lastName
      * @param string $middleName
-     * @param string $position
+     * @param string $roleName
      * @return void
      * @throws \Exception
      */
-    public static function insertWorker(int $branchId, string $name, string $lastName, string $middleName, string $position): void
+    public static function insertWorker(int $branchId, string $name, string $lastName, string $middleName, string $roleName): void
     {
-        if (empty($name) || empty($lastName) || empty($middleName) || empty($position)) {
+        if (empty($name) || empty($lastName) || empty($middleName) || empty($roleName)) {
             throw new \InvalidArgumentException("Invalid input data");
         }
 
         $connectionProvider = new ConnectionProvider();
-        $sql = "INSERT INTO user 
-            (branch_id, first_name, last_name, middle_name, phone_number, email, sex, birth_date, hiring_date, position, comment)
-            VALUES ('" . $connectionProvider->Quote($branchId) . "',
+
+        $email = strtolower($name . '.' . $lastName . '@mail');
+
+        $password = "default";
+
+        $teamId = "1";
+
+        $phoneNumber = "Please, add phone number";
+
+        $sex = "male";
+        $birthDate = "21.01";
+        $hiringDate = "21.01";
+        $comment = "21.01";
+
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        $sql = "INSERT INTO user (
+                    team_id, first_name, last_name, middle_name, phone_number,
+                    email, sex, birth_date, hiring_date, comment, password
+                ) VALUES (
+                    " . ($teamId !== null ? "'" . $connectionProvider->Quote($teamId) . "'" : "NULL") . ",
                     '" . $connectionProvider->Quote($name) . "',
                     '" . $connectionProvider->Quote($lastName) . "',
-                    '" . $connectionProvider->Quote($middleName) . "',
-                    '" . $connectionProvider->Quote("Please, add phone number") . "',
-                    '" . $connectionProvider->Quote("Please, add email") . "',
-                    '" . $connectionProvider->Quote("male") . "',
-                    '" . $connectionProvider->Quote("1985-09-20") . "',
-                    '" . $connectionProvider->Quote("1985-09-20") . "',
-                    '" . $connectionProvider->Quote($position) . "',
-                    '" . $connectionProvider->Quote("Please, add comment") . "')";
-        $result = $connectionProvider->RealQuery($sql);
+                    " . ($middleName !== null ? "'" . $connectionProvider->Quote($middleName) . "'" : "NULL") . ",
+                    " . ($phoneNumber !== null ? "'" . $connectionProvider->Quote($phoneNumber) . "'" : "NULL") . ",
+                    '" . $connectionProvider->Quote($email) . "',
+                    " . ($sex !== null ? "'" . $connectionProvider->Quote($sex) . "'" : "NULL") . ",
+                    " . ($birthDate !== null ? "'" . $connectionProvider->Quote($birthDate) . "'" : "NULL") . ",
+                    " . ($hiringDate !== null ? "'" . $connectionProvider->Quote($hiringDate) . "'" : "NULL") . ",
+                    " . ($comment !== null ? "'" . $connectionProvider->Quote($comment) . "'" : "NULL") . ",
+                    '" . $connectionProvider->Quote($hashedPassword) . "'
+                )";
 
-        if (!$result) {
-            throw new \Exception("Failed to add user for branch");
+        // Получаем ID только что добавленного пользователя
+        $workerId = $connectionProvider->GetLastInsertId();
+
+        // Вставляем роль нового работника в таблицу employee_role
+        $roleSql = "INSERT INTO employee_role 
+            (employee_id, role_name)
+            VALUES ('" . $connectionProvider->Quote($workerId) . "', '" . $connectionProvider->Quote($roleName) . "')";
+        $roleResult = $connectionProvider->RealQuery($roleSql);
+
+        if (!$roleResult) {
+            throw new \Exception("Failed to assign role to user");
         }
 
+        // Обновляем количество работников в филиале
         $branchSql = "UPDATE company_branch SET workers_count = workers_count + 1 WHERE id = '" . $connectionProvider->Quote($branchId) . "'";
         $branchResult = $connectionProvider->RealQuery($branchSql);
 

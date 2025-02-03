@@ -92,4 +92,14 @@ class ConnectionProvider
             self::$connection = null;
         }
     }
+
+    /**
+     * Возвращает последний вставленный ID
+     *
+     * @return int
+     */
+    public function GetLastInsertId(): int
+    {
+        return self::$connection->insert_id;
+    }
 }

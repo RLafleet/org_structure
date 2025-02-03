@@ -1,4 +1,4 @@
-function requestBranchInformation(city, address) {
+function requestBranchInformation(city, address, branchDescription) {
     var xhr = new XMLHttpRequest();
 
     xhr.open('POST', 'index.php', false);
@@ -7,7 +7,8 @@ function requestBranchInformation(city, address) {
 
     const params = 'city=' + encodeURIComponent(city) +
         '&workersCount=' +
-        '&address=' + encodeURIComponent(address);
+        '&address=' + encodeURIComponent(address) +
+        '&branch_description=' + encodeURIComponent(branchDescription);
 
     console.log(params);
 

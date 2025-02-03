@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="../css/login.html.css">
+</head>
+<body>
+<div class="login-page">
+    <h1>Login</h1>
+    {% if error %}
+        <div style="color: red; margin-bottom: 10px;">{{ error }}</div>
+    {% endif %}
+    <form method="post" action="/index.php">
+        <label>
+            Username:
+            <input type="text" name="username" required>
+        </label>
+        <label>
+            Password:
+            <input type="password" name="password" required>
+        </label>
+        <button type="submit">Login</button>
+    </form>
+    <p>
+        Don't have an account? <a href="../index.php?action=register">Register</a>
+    </p>
+</div>
+</body>
+</html>

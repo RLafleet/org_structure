@@ -6,6 +6,7 @@ use App\DbTable\BranchTable;
 
 try {
     $branch_id = intval($_POST['branch_id'] ?? "");
+    error_log((string)$branch_id);
     BranchTable::deleteBranch($branch_id);
 } catch (\Exception $e) {
     echo "Error: " . $e->getMessage();
