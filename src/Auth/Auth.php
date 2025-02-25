@@ -4,14 +4,13 @@ namespace App\Auth;
 
 require_once __DIR__ . '/../../public/vendor/autoload.php';
 
+use App\DbTable\EmployeeRoleTable;
 use App\DbTable\UserTable;
 use App\connection\ConnectionProvider;
 
 class Auth
 {
     /**
-     * Авторизация пользователя
-     *
      * @param string $email
      * @param string $password
      * @return bool
@@ -21,7 +20,6 @@ class Auth
     {
         $connectionProvider = new ConnectionProvider();
 
-        // Проверяем, существует ли пользователь с указанным email
         $sql = "SELECT id, password FROM user WHERE email = '" . $connectionProvider->Quote($email) . "'";
         $user = $connectionProvider->Fetch($sql);
 
@@ -31,19 +29,19 @@ class Auth
 
         $hashedPassword = $user[0]['password'];
 
-        // Сравниваем пароль
         if (!password_verify($password, $hashedPassword)) {
             throw new \Exception("Invalid email or password");
         }
 
-        // Авторизация успешна, можно создать сессию
         $_SESSION['user_id'] = $user[0]['id'];
+        $role = EmployeeRoleTable::getUserRole($user[0]['id']);
+        setcookie('user_id', $user[0]['id'], time() + 3600, '/');
+        setcookie('user_role', $role, time() + 3600, '/');
+
         return true;
     }
 
     /**
-     * Регистрация нового пользователя
-     *
      * @param string $firstName
      * @param string $lastName
      * @param string $email
@@ -71,12 +69,10 @@ class Auth
         ?string $comment = null,
         ?int $teamId = null
     ): void {
-        // Проверяем, существует ли email
         if (UserTable::isEmailExists($email)) {
             throw new \Exception("Email already exists");
         }
 
-        // Регистрируем нового пользователя
         UserTable::registerUser(
             $firstName,
             $lastName,
@@ -93,12 +89,14 @@ class Auth
     }
 
     /**
-     * Выход из системы
-     *
      * @return void
      */
     public static function logout(): void
     {
+        setcookie('is_authenticated', '', time() - 3600, '/');
+
+        setcookie('user_role', '', time() - 3600, '/');
+
         if (session_status() === PHP_SESSION_ACTIVE) {
             session_destroy();
         }

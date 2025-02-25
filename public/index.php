@@ -82,7 +82,6 @@ if (!$isAuthenticated) {
             }
         }
 
-        // Регистрация
         if (isset(
             $_POST['register_username'],
             $_POST['register_password'],
@@ -108,7 +107,7 @@ if (!$isAuthenticated) {
                     $username,
                     $password
                 );
-                setcookie('is_authenticated', 'true', time() + 3600, '/'); // Cookie на 1 час
+                setcookie('is_authenticated', 'true', time() + 3600, '/');
                 header('Location: /index.php');
                 exit;
             } catch (Exception $e) {
@@ -118,14 +117,23 @@ if (!$isAuthenticated) {
         }
     }
 
-    // Если пользователь запросил страницу регистрации
     if ($_GET['action'] ?? '' === 'register') {
         echo $twig->render($REGISTER_TEMPLATE);
         exit;
     }
 
-    // Если пользователь не аутентифицирован, показываем форму входа
     echo $twig->render($LOGIN_TEMPLATE);
+    exit;
+}
+
+$current_user_role = $_COOKIE['user_role'] ?? 0;
+
+if ($current_user_role < 3) {
+    echo $twig->render($ERROR_TEMPLATE, [
+        'code' => 403,
+        'text' => "Access Denied",
+        'hint' => "You do not have permission to access this page."
+    ]);
     exit;
 }
 

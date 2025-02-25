@@ -1,42 +1,26 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-    <style>
-        body {
-            font: normal 100%/1.15 serif;
-            background-color: whitesmoke;
-            color: black;
-        }
-
-        .wrapper {
-            max-width: 600px;
-            height: auto;
-            padding: 1em 2em;
-            margin: 2em auto 0 auto;
-            background-color: lightsalmon;
-            border-radius: 0.75em;
-        }
-
-        h1, p {
-            text-shadow: 0 0 6px whitesmoke;
-        }
-
-        h1 {
-            margin: 0 0 1rem 0;
-            font-size: 3em;
-        }
-
-        p {
-            font-size: 1.5em;
-        }
-    </style>
-    <title>Error</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error {{ code }}</title>
+    <link rel="stylesheet" href="../css/error.html.css">
 </head>
 <body>
-<div class="wrapper">
-    <h1>{{ code }}</h1>
-    <p>{{ text }}</p>
-    <p>{{ hint }}</p>
+<div class="error-container">
+    <h1>Error {{ code }}</h1>
+    <p class="error-text">{{ text }}</p>
+    <p class="error-hint">{{ hint }}</p>
+
+    <div class="request-access-section">
+        <form method="post" action="../requestAccess.php">
+            <button type="submit" class="request-access-button">Request Access</button>
+        </form>
+    </div>
+
+    <div class="logout-section">
+        <a href="../logout.php" class="logout-button">Logout</a>
+    </div>
 </div>
 </body>
 </html>

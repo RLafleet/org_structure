@@ -8,11 +8,44 @@
 </head>
 <body>
 <div class="user-role-page">
+    <div class="breadcrumbs">
+        {% for crumb in breadcrumbs %}
+            {% if crumb.url %}
+                <a href="{{ crumb.url }}">{{ crumb.name }}</a> &gt;
+            {% else %}
+                <span>{{ crumb.name }}</span>
+            {% endif %}
+        {% endfor %}
+    </div>
+
     <h1 class="content__roles-list">Roles for {{ userInfo.first_name }} {{ userInfo.last_name }}</h1>
     <div class="user-info">
         <span class="user-name">User: {{ userInfo.first_name }} {{ userInfo.last_name }}</span>
         <span class="user-email">Email: {{ userInfo.email }}</span>
     </div>
+
+    {% if current_user_role == 4 %}
+        <div class="role-requests-section">
+            <h2>Role Requests</h2>
+            {% if roleRequests %}
+                <ul class="role-requests-list">
+                    {% for request in roleRequests %}
+                        <li class="role-request-item">
+                            <span>User ID: {{ request.user_id }} - Requested Role: {{ request.requested_role }}</span>
+                            <form method="post" action="../userRole.php?id={{ user_id }}">
+                                <input type="hidden" name="request_id" value="{{ request.id }}">
+                                <button type="submit" name="approve_request" class="approve-button">Approve</button>
+                                <button type="submit" name="reject_request" class="reject-button">Reject</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No pending requests.</p>
+            {% endif %}
+        </div>
+    {% endif %}
+
 
     {% if current_user_role >= 4 %}
         <div class="roles-list">
@@ -21,6 +54,13 @@
                     <div class="role-container">
                         <span class="role-name">Role: {{ role.role_name }}</span>
                         <span class="role-accessibility">Accessibility: {{ role.accessibility }}</span>
+
+                        {% if role.accessibility != 4 %}
+                            <form method="post" action="../userRole.php?id={{ user_id }}" style="display: inline;">
+                                <input type="hidden" name="delete_user_id" value="{{ role.employee_id }}">
+                                <button type="submit" name="delete_user" class="delete-button">Delete</button>
+                            </form>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}

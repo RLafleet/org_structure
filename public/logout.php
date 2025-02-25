@@ -1,4 +1,11 @@
 <?php
-setcookie('is_authenticated', '', time() - 3600, '/'); // Удаляем cookie
-header('Location: /index.php');
+declare(strict_types=1);
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+use App\Auth\Auth;
+
+Auth::logout();
+
+header("Location: /index.php");
 exit;

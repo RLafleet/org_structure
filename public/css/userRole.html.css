@@ -91,3 +91,113 @@ body {
     color: #c62828;
     text-align: center;
 }
+
+.breadcrumbs {
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+.breadcrumbs a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumbs span {
+    color: #333;
+    font-weight: bold;
+}
+
+/* userRole.css */
+.request-access-section {
+    margin-top: 20px;
+}
+
+.request-access-button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.request-access-button:hover {
+    background-color: #218838;
+}
+
+.pending-requests-section {
+    margin-top: 30px;
+}
+
+.pending-requests-list {
+    list-style: none;
+    padding: 0;
+}
+
+.request-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.request-user {
+    font-weight: bold;
+}
+
+.request-role {
+    color: #666;
+}
+
+.request-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.approve-button {
+    padding: 5px 10px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.approve-button:hover {
+    background-color: #218838;
+}
+
+.reject-button {
+    padding: 5px 10px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.reject-button:hover {
+    background-color: #c82333;
+}
+
+.delete-button {
+    padding: 5px 10px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}

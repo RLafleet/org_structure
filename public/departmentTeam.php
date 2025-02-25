@@ -10,6 +10,17 @@ $twig = TwigLoader::LoadTwigStable();
 $TEMPLATE_NAME = "/twig/departmentTeam.html.twig";
 $ERROR_TEMPLATE = "/twig/error.html.twig";
 
+$current_user_role = $_COOKIE['user_role'] ?? 0;
+
+if ($current_user_role < 3) {
+    echo $twig->render($ERROR_TEMPLATE, [
+        'code' => 403,
+        'text' => "Access Denied",
+        'hint' => "You do not have permission to access this page."
+    ]);
+    exit;
+}
+
 $department_id = intval($_GET['id'] ?? "");
 if ($department_id <= 0) {
     die("Invalid department ID");

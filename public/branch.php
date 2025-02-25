@@ -13,6 +13,17 @@ $twig = TwigLoader::LoadTwigStable();
 $TEMPLATE_NAME = "/twig/branch.html.twig";
 $ERROR_TEMPLATE = "/twig/error.html.twig";
 
+$current_user_role = $_COOKIE['user_role'] ?? 0;
+
+if ($current_user_role < 3) {
+    echo $twig->render($ERROR_TEMPLATE, [
+        'code' => 403,
+        'text' => "Access Denied",
+        'hint' => "You do not have permission to access this page."
+    ]);
+    exit;
+}
+
 $branchId = intval($_GET['id'] ?? "");
 $rows = BranchWorkersHandler::getBranchWorkers($branchId);
 $branchInfo = BranchTable::findBranch($branchId);

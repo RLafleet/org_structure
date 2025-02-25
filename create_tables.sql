@@ -65,3 +65,12 @@ CREATE TABLE employee_role (
                                role_name VARCHAR(100) NOT NULL,
                                FOREIGN KEY (employee_id) REFERENCES user(id)
 );
+
+CREATE TABLE role_requests (
+                               id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                               user_id INT UNSIGNED NOT NULL,
+                               requested_role INT UNSIGNED NOT NULL,
+                               status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+                               created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                               FOREIGN KEY (user_id) REFERENCES user(id)
+);
