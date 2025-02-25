@@ -1,0 +1,93 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.user-role-page {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.content__roles-list {
+    text-align: center;
+    color: #333;
+}
+
+.user-info {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #e9ecef;
+    border-radius: 8px;
+}
+
+.user-info span {
+    display: block;
+    margin: 5px 0;
+}
+
+.roles-list {
+    margin-top: 20px;
+}
+
+.role-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.role-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.role-name {
+    font-weight: bold;
+}
+
+.add-role-section, .add-user-section, .edit-user-section {
+    margin-top: 30px;
+}
+
+.add-role__label, .add-user__label, .edit-user__label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.label__role-name, .label__accessibility, .label__first-name, .label__last-name, .label__middle-name, .label__phone-number, .label__email, .label__password, .label__sex, .label__birth-date, .label__hiring-date, .label__comment {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.add-role__button, .add-user__button, .edit-user__button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-role__button:hover, .add-user__button:hover, .edit-user__button:hover {
+    background-color: #218838;
+}
+
+.access-denied {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #ffebee;
+    border: 1px solid #ffcdd2;
+    border-radius: 8px;
+    color: #c62828;
+    text-align: center;
+}

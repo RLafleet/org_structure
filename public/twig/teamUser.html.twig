@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Users</title>
+    <link rel="stylesheet" href="../css/teamUser.html.css">
+</head>
+<body>
+<div class="team-user-page">
+    <h1 class="content__users-list">Users for {{ teamInfo.team_name }}</h1>
+    <div class="team-info">
+        <span class="team-name">Team: {{ teamInfo.team_name }}</span>
+    </div>
+    <div class="users-list">
+        {% for user in teamUsers %}
+            <div class="user-item">
+                <div id="user-id" style="visibility: hidden">{{ user.id }}</div>
+                <a href="../userRole.php?id={{ user.id|trim }}" class="user-id">{{ loop.index }}</a>
+                <div class="user-container">
+                    <span class="user-name">User: {{ user.first_name }} {{ user.last_name }}</span>
+                    <form method="post" action="../deleteTeamUser.php">
+                        <input type="hidden" name="team_id" value="{{ team_id }}">
+                        <input type="hidden" name="user_id" value="{{ user.id|trim }}">
+                        <button type="submit" name="delete_user" onclick="return confirm('Are you sure you want to remove this user from the team?')">Remove</button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="add-user-section">
+        <h2>Add New User</h2>
+        <form method="post" action="../addTeamUser.php">
+            <input type="hidden" name="team_id" value="{{ team_id }}">
+            <label class="add-user__label">
+                Select user:
+                <select name="user_id" class="label__user-select" required>
+                    {% for user in allUsers %}
+                        <option value="{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <button type="submit" name="add_user" class="add-user__button">Add User</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

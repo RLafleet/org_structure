@@ -82,4 +82,92 @@ class UserTable
 
         return !empty($result) && $result[0]['count'] > 0;
     }
+
+    /**
+     * @return array
+     */
+    public static function listUsers(): array
+    {
+        $connectionProvider = new ConnectionProvider();
+        $sql = "SELECT * FROM user";
+        return $connectionProvider->Fetch($sql);
+    }
+
+    /**
+     * @param int $id
+     * @return array|null
+     */
+    public static function findUser(int $id): ?array
+    {
+        $connectionProvider = new ConnectionProvider();
+        $sql = "SELECT * FROM user WHERE id = " . $connectionProvider->Quote($id);
+        $result = $connectionProvider->Fetch($sql);
+
+        if (empty($result)) {
+            return null;
+        }
+
+        return $result[0];
+    }
+
+    /**
+     * @param int $id
+     * @return void
+     * @throws \Exception
+     */
+    public static function deleteUser(int $id): void
+    {
+        $connectionProvider = new ConnectionProvider();
+        $sql = "DELETE FROM user WHERE id = " . $connectionProvider->Quote($id);
+        $result = $connectionProvider->RealQuery($sql);
+
+        if (!$result) {
+            throw new \Exception("Failed to delete user");
+        }
+    }
+
+    public static function updateUser(int $id, array $data): void
+    {
+        if (empty($data)) {
+            throw new \InvalidArgumentException("No data provided for update");
+        }
+
+        $connectionProvider = new ConnectionProvider();
+        $updates = [];
+
+        foreach ($data as $key => $value) {
+            // Обновляем только те поля, которые переданы и не пусты
+            if ($value !== null && $value !== '') {
+                $updates[] = $key . " = '" . $connectionProvider->Quote($value) . "'";
+            }
+        }
+
+        // Если нет полей для обновления, выходим
+        if (empty($updates)) {
+            return;
+        }
+
+        $sql = "UPDATE user SET " . implode(", ", $updates) . " WHERE id = " . $connectionProvider->Quote($id);
+        $result = $connectionProvider->RealQuery($sql);
+
+        if (!$result) {
+            throw new \Exception("Failed to update user");
+        }
+    }
+
+    /**
+     * @param int $id
+     * @return array|null
+     */
+    public static function getUserDetails(int $id): ?array
+    {
+        $connectionProvider = new ConnectionProvider();
+        $sql = "SELECT * FROM user WHERE id = " . $connectionProvider->Quote($id);
+        $result = $connectionProvider->Fetch($sql);
+
+        if (empty($result)) {
+            return null;
+        }
+        return $result[0];
+    }
 }

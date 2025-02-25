@@ -22,20 +22,6 @@ if (!$branchInfo) {
 
 $departments = DepartmentTable::listDepartments($branchId);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_department'])) {
-    $departmentName = trim($_POST['department_name'] ?? "");
-
-    if (!empty($departmentName)) {
-        try {
-            DepartmentTable::insertDepartment($branchId, $departmentName);
-            header("Location: branchDepartment.php?id=" . $branchId);
-            exit;
-        } catch (\Exception $e) {
-            die("Error: " . $e->getMessage());
-        }
-    }
-}
-
 try {
     echo $twig->render($TEMPLATE_NAME, [
         'branch_id' => $branchId,

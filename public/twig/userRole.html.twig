@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Roles</title>
+    <link rel="stylesheet" href="../css/userRole.html.css">
+</head>
+<body>
+<div class="user-role-page">
+    <h1 class="content__roles-list">Roles for {{ userInfo.first_name }} {{ userInfo.last_name }}</h1>
+    <div class="user-info">
+        <span class="user-name">User: {{ userInfo.first_name }} {{ userInfo.last_name }}</span>
+        <span class="user-email">Email: {{ userInfo.email }}</span>
+    </div>
+
+    {% if current_user_role >= 4 %}
+        <div class="roles-list">
+            {% for role in userRoles %}
+                <div class="role-item">
+                    <div class="role-container">
+                        <span class="role-name">Role: {{ role.role_name }}</span>
+                        <span class="role-accessibility">Accessibility: {{ role.accessibility }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="add-role-section">
+            <h2>Add New Role</h2>
+            <form method="post" action="../userRole.php?id={{ user_id }}">
+                <label class="add-role__label">
+                    Role Name:
+                    <input type="text" name="role_name" class="label__role-name" required>
+                </label>
+                <label class="add-role__label">
+                    Accessibility Level:
+                    <input type="number" name="accessibility" class="label__accessibility" required>
+                </label>
+                <button type="submit" name="add_role" class="add-role__button">Add Role</button>
+            </form>
+        </div>
+        <div class="add-user-section">
+            <h2>Add New Worker</h2>
+            <form method="post" action="../userRole.php?id={{ user_id }}">
+                <label class="add-user__label">
+                    First Name:
+                    <input type="text" name="first_name" class="label__first-name" required>
+                </label>
+                <label class="add-user__label">
+                    Last Name:
+                    <input type="text" name="last_name" class="label__last-name" required>
+                </label>
+                <label class="add-user__label">
+                    Email:
+                    <input type="email" name="email" class="label__email" required>
+                </label>
+                <label class="add-user__label">
+                    Password:
+                    <input type="password" name="password" class="label__password" required>
+                </label>
+                <button type="submit" name="add_user" class="add-user__button">Add Worker</button>
+            </form>
+        </div>
+        <div class="edit-user-section">
+            <h2>Edit Worker Details</h2>
+            <form method="post" action="../userRole.php?id={{ user_id }}">
+                <label class="edit-user__label">
+                    First Name:
+                    <input type="text" name="first_name" class="label__first-name" value="{{ userInfo.first_name }}">
+                </label>
+                <label class="edit-user__label">
+                    Last Name:
+                    <input type="text" name="last_name" class="label__last-name" value="{{ userInfo.last_name }}">
+                </label>
+                <label class="edit-user__label">
+                    Middle Name:
+                    <input type="text" name="middle_name" class="label__middle-name" value="{{ userInfo.middle_name }}">
+                </label>
+                <label class="edit-user__label">
+                    Phone Number:
+                    <input type="text" name="phone_number" class="label__phone-number" value="{{ userInfo.phone_number }}">
+                </label>
+                <label class="edit-user__label">
+                    Email:
+                    <input type="email" name="email" class="label__email" value="{{ userInfo.email }}">
+                </label>
+                <label class="edit-user__label">
+                    Sex:
+                    <select name="sex" class="label__sex">
+                        <option value="male" {{ userInfo.sex == 'male' ? 'selected' : '' }}>Male</option>
+                        <option value="female" {{ userInfo.sex == 'female' ? 'selected' : '' }}>Female</option>
+                    </select>
+                </label>
+                <label class="edit-user__label">
+                    Birth Date:
+                    <input type="date" name="birth_date" class="label__birth-date" value="{{ userInfo.birth_date }}">
+                </label>
+                <label class="edit-user__label">
+                    Hiring Date:
+                    <input type="date" name="hiring_date" class="label__hiring-date" value="{{ userInfo.hiring_date }}">
+                </label>
+                <label class="edit-user__label">
+                    Comment:
+                    <textarea name="comment" class="label__comment">{{ userInfo.comment }}</textarea>
+                </label>
+                <button type="submit" name="edit_user" class="edit-user__button">Save Changes</button>
+            </form>
+        </div>
+    {% else %}
+        <div class="access-denied">
+            <p>You do not have permission to access this page.</p>
+        </div>
+    {% endif %}
+</div>
+</body>
+</html>

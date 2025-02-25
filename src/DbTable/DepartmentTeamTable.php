@@ -8,8 +8,6 @@ use App\connection\ConnectionProvider;
 class DepartmentTeamTable
 {
     /**
-     * Добавляет команду в отдел.
-     *
      * @param int $department_id ID отдела.
      * @param int $team_id ID команды.
      * @return void
@@ -36,8 +34,6 @@ class DepartmentTeamTable
     }
 
     /**
-     * Удаляет команду из отдела.
-     *
      * @param int $department_id ID отдела.
      * @param int $team_id ID команды.
      * @return void
@@ -59,5 +55,18 @@ class DepartmentTeamTable
         if (!$result) {
             throw new \Exception("Failed to remove team from department");
         }
+    }
+
+    /**
+     * @param int $department_id ID отдела.
+     * @return array
+     */
+    public static function getTeamsByDepartment(int $department_id): array
+    {
+        $connectionProvider = new ConnectionProvider();
+        $sql = "SELECT t.* FROM team t
+                JOIN department_team dt ON t.team_id = dt.team_id
+                WHERE dt.department_id = " . $connectionProvider->Quote($department_id);
+        return $connectionProvider->Fetch($sql);
     }
 }

@@ -3,6 +3,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
 
 use App\DbTable\DepartmentTable;
+$id = intval($_GET['id'] ?? "");
 
 try {
     $department_id = intval($_POST['department_id'] ?? "");
@@ -12,5 +13,4 @@ try {
     echo "Error: " . $e->getMessage();
 }
 
-//header("Location: /branchDepartment.php?id=" . $_POST['department_id']);
-    header("Location: /branchDepartment.php?id=1");
+header("Location: /branchDepartment.php?id=" . $id);

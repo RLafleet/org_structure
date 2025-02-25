@@ -1,0 +1,86 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.department-team-page {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.content__teams-list {
+    text-align: center;
+    color: #333;
+}
+
+.department-info {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #e9ecef;
+    border-radius: 8px;
+}
+
+.department-info span {
+    display: block;
+    margin: 5px 0;
+}
+
+.teams-list {
+    margin-top: 20px;
+}
+
+.team-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.team-container {
+    display: flex;
+    align-items: center;
+}
+
+.team-name {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.add-team-section {
+    margin-top: 30px;
+}
+
+.add-team__label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.label__team-name {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.add-team__button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-team__button:hover {
+    background-color: #218838;
+}
