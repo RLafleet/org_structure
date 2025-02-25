@@ -1,56 +1,45 @@
 <!DOCTYPE html>
-<html lang="eng">
+<html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="../css/branch.html.css">
-    <title>Worker</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Branch Departments</title>
+    <link rel="stylesheet" href="../css/department.html.css">
 </head>
-<div class="">
-    <a href="../index.php" style="font-size: 30px;">Branches/</a>
-    <span class="address">Address:</span>
-    <input id="address-input" class="address" value="{{ branchInfo.address }}">
-    <span class="city">City:</span>
-    <input id="city-input" class="city" value="{{ branchInfo.city }}">
-    <button class="update-branch" type="submit" onclick="return confirm('Are you sure you want to save new info about this branch?')">Save</button>
-    <h1 class="content__branches-list" data-value="{{ branch_id }}">Branch number {{ branch_id }}, workers:</h1>
-    {% for row in rows %}
-        <div class="work-page__branches" id="branches">
-            <div class="work-item">
-                <div class="branch-name">{{ loop.index }}</div>
-                <a class="worker-full-name" href="../worker.php?id={{ row.id|trim }}&branch_id={{ branch_id }}">Full name: {{ row.first_name }} {{ row.last_name }} {{ row.middle_name }}</a>
-                <div class="worker-position">Position: {{ row.position }}</div>
-                <form method="post" action="../deleteWorker.php?branch_id={{ branch_id }}">
-                    <input type="hidden" name="worker_id" value="{{ row.id|trim }}">
-                    <button type="submit" onclick="return confirm('Are you sure you want to delete this worker?')">Delete</button>
-                </form>
-            </div>
-        </div>
-    {% endfor %}
-    <div class="work-page__new-worker">
-        <button class="new-worker__title">
-            Add worker
-        </button>
+<body>
+<div class="branch-page">
+    <h1 class="content__departments-list">Departments for {{ branchInfo.city }}</h1>
+    <div class="branch-info">
+        <span class="address">Address: {{ branchInfo.address }}</span>
+        <span class="workers-count">Workers Count: {{ branchInfo.workers_count }}</span>
+        <span class="branch-description">Description: {{ branchInfo.branch_description }}</span>
     </div>
-    <div class="work-page__add-worker">
-        <label class="add-worker__label">
-            Enter first name
-            <input class="label__worker-name">
-        </label>
-        <label class="add-worker__label">
-            Enter last name
-            <input class="label__worker-last-name">
-        </label>
-        <label class="add-worker__label">
-            Enter middle name
-            <input class="label__worker-middle-name">
-        </label>
-        <label class="add-worker__label">
-            Enter role
-            <input class="label__worker-position">
-        </label>
-        <button class="add-worker__button">Add</button>
+    <div class="departments-list">
+        {% for department in departments %}
+            <div class="department-item">
+                <div id="department-id" style="visibility: hidden">{{ department.department_id }}</div>
+                <a href="../departmentTeam.php?id={{ department.department_id|trim }}" class="department-id">{{ loop.index }}</a>
+                <div class="department-container">
+                    <span class="department-name">Department: {{ department.department_name }}</span>
+                    <form method="post" action="../deleteDepartment.php">
+                        <input type="hidden" name="department_id" value="{{ department.department_id|trim }}">
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this department?')">Delete</button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="add-department-section">
+        <h2>Add New Department</h2>
+        <form method="post" action="../branchDepartment.php?id={{ branch_id }}">
+            <label class="add-department__label">
+                Enter department name:
+                <input type="text" name="department_name" class="label__department-name" required>
+            </label>
+            <button type="submit" name="add_department" class="add-department__button">Add Department</button>
+        </form>
     </div>
 </div>
+<script type="module" src="../js/simplyScripts/addDepartment.js"></script>
+</body>
 </html>
-
-<script type="module" src="../js/simplyScripts/addWorker.js"></script>
-<script type="module" src="../js/simplyScripts/updateBranchInfo.js"></script>

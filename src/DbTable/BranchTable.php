@@ -43,26 +43,23 @@ class BranchTable
     }
 
     /**
-     * @param int $branch_id
+     * Удаляет ветку по её ID.
+     *
+     * @param int $branch_id ID ветки, которую нужно удалить.
      * @return void
      * @throws \Exception
      */
     public static function deleteBranch(int $branch_id): void
     {
-        error_log("deleteBranch");
-        $connectionProvider = new ConnectionProvider();
-        $sql = "DELETE FROM user WHERE branch_id = '" . $connectionProvider->Quote($branch_id) . "'";
-        error_log("$sql");
-        $deleteWorker = $connectionProvider->RealQuery($sql);
-        error_log("$deleteWorker");
-        if (!$deleteWorker) {
-            throw new \Exception("Failed to delete workers for branch");
+        if ($branch_id <= 0) {
+            throw new \InvalidArgumentException("Invalid branch ID");
         }
-        error_log("here");
-        $sql = "DELETE FROM company_branch WHERE id='" . $connectionProvider->Quote($branch_id) . "'";
-        $deleteBranch = $connectionProvider->RealQuery($sql);
 
-        if (!$deleteBranch) {
+        $connectionProvider = new ConnectionProvider();
+        $sql = "DELETE FROM company_branch WHERE id = " . $connectionProvider->Quote($branch_id);
+        $result = $connectionProvider->RealQuery($sql);
+
+        if (!$result) {
             throw new \Exception("Failed to delete branch");
         }
     }

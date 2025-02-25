@@ -1,66 +1,86 @@
-.work-page {
-    width: 100%;
-    height: 100%;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
 }
 
-.content__branches-list {
+.branch-page {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.content__departments-list {
+    text-align: center;
+    color: #333;
+}
+
+.branch-info {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #e9ecef;
+    border-radius: 8px;
+}
+
+.branch-info span {
+    display: block;
+    margin: 5px 0;
+}
+
+.departments-list {
+    margin-top: 20px;
+}
+
+.department-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 
-.work-item {
+.department-container {
     display: flex;
-    flex-direction: row;
-    gap: 10px;
-    border: 1px solid #ccc;
-    padding: 10px;
+    align-items: center;
+}
+
+.department-name {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.add-department-section {
+    margin-top: 30px;
+}
+
+.add-department__label {
+    display: block;
     margin-bottom: 10px;
 }
 
-.worker-full-name {
-    font-size: 24px;
-    margin-left: 40px;
-}
-
-.worker-position {
-    font-size: 24px;
-    margin-left: 700px;
-}
-
-.workers__title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.work-page__new-worker {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
-.work-page__add-worker {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    width: 97%;
-    margin: auto;
-    padding: 15px 0;
-    border: dashed gray;
-}
-
-.new-worker__title {
+.label__department-name {
     width: 100%;
-    font-size: 20px;
-    padding: 20px;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-.add-worker__button {
-    padding: 5px 10px;
+.add-department__button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-.add-worker__label {
-    padding: 0 10px;
+.add-department__button:hover {
+    background-color: #218838;
 }

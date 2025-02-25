@@ -2,9 +2,8 @@
 declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
 
-use App\DbTable\{BranchDepartment, BranchDepartmentHandler};
+use App\DbTable\{DepartmentTable, BranchTable};
 use App\Loader\TwigLoader;
-
 
 $twig = TwigLoader::LoadTwigStable();
 
@@ -12,29 +11,37 @@ $TEMPLATE_NAME = "/twig/branch.html.twig";
 $ERROR_TEMPLATE = "/twig/error.html.twig";
 
 $branchId = intval($_GET['id'] ?? "");
-$rows = BranchDepartmentHandler::getBranchDepartments($branchId);
-$departmentsInfo = BranchDepartment::findDepartment($branchId);
+if ($branchId <= 0) {
+    die("Invalid branch ID");
+}
 
-$departmentName = $_POST['department_name'] ?? "";
-error_log("__---------__", $departmentName);
+$branchInfo = BranchTable::findBranch($branchId);
+if (!$branchInfo) {
+    die("Branch not found");
+}
 
-if (!empty($departmentName)) {
-    error_log("__---------__", $departmentName);
-    try {
-        BranchDepartment::insertDepartment($branchId, $departmentName);
-    } catch (\Exception $e) {
-        echo "Error: " . $e->getMessage();
+$departments = DepartmentTable::listDepartments($branchId);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_department'])) {
+    $departmentName = trim($_POST['department_name'] ?? "");
+
+    if (!empty($departmentName)) {
+        try {
+            DepartmentTable::insertDepartment($branchId, $departmentName);
+            header("Location: branchDepartment.php?id=" . $branchId);
+            exit;
+        } catch (\Exception $e) {
+            die("Error: " . $e->getMessage());
+        }
     }
 }
 
 try {
-    echo $twig->render($TEMPLATE_NAME,
-        [
-            'branch_id' => $branchId,
-            'rows' => $rows,
-            '$departmentsInfo' => $departmentsInfo[0],
-        ]
-    );
+    echo $twig->render($TEMPLATE_NAME, [
+        'branch_id' => $branchId,
+        'branchInfo' => $branchInfo,
+        'departments' => $departments,
+    ]);
 } catch (\Throwable $e) {
     error_log($e->getMessage());
 
